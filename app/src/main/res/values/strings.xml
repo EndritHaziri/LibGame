@@ -1,17 +1,18 @@
 <resources>
-<string name="app_name">LibGame</string>
-<string name="title_home">Home</string>
-<string name="title_dashboard">Dashboard</string>
-<string name="title_notifications">Notifications</string>
-<string name="title_add">Add</string>
-<string name="title_edit">Edit</string>
-<string name="title_remove">Remove</string>
-<string name="title_evaluation">Evaluation</string>
-<string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nulla neque, varius in diam cursus, cursus ornare est. Maecenas in tempus est, ac sollicitudin lacus. Ut luctus vitae nulla a finibus. Cras tincidunt augue sit amet orci lobortis tincidunt. Aenean at lorem at est ullamcorper dignissim. Praesent dui tellus, laoreet at risus venenatis, tempor viverra massa. Maecenas lorem nisi, ullamcorper sed consectetur et, commodo pulvinar libero. Integer efficitur non purus at eleifend. </string>
-<string name="title_cancel">Cancel</string>
-<string name="descriptionHS">Rangez votre épée, sortez votre deck et préparez-vous pour Hearthstone. Les règles de ce jeu de cartes et de stratégie sont simples, mais vous pouvez vous attendre à des défis épiques et intenses ! Jouez gratuitement, utilisez vos cartes pour jeter des sorts, invoquer des créatures et donner des ordres aux héros de Warcraft lors de duels légendaires et stratégiques.</string>
-<string name="publisher1">Blizzard</string>
-<string name="developper1">Blizzard</string>
-<string name="publisher">Publisher</string>
-<string name="developper">Developper</string>
+    <string name="app_name">LibGame</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_add">Add</string>
+    <string name="title_edit">Edit</string>
+    <string name="title_remove">Remove</string>
+    <string name="title_evaluation">Evaluation</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nulla neque, varius in diam cursus, cursus ornare est. Maecenas in tempus est, ac sollicitudin lacus. Ut luctus vitae nulla a finibus. Cras tincidunt augue sit amet orci lobortis tincidunt. Aenean at lorem at est ullamcorper dignissim. Praesent dui tellus, laoreet at risus venenatis, tempor viverra massa. Maecenas lorem nisi, ullamcorper sed consectetur et, commodo pulvinar libero. Integer efficitur non purus at eleifend. </string>
+    <string name="title_cancel">Cancel</string>
+    <string name="descriptionHS">Rangez votre épée, sortez votre deck et préparez-vous pour Hearthstone. Les règles de ce jeu de cartes et de stratégie sont simples, mais vous pouvez vous attendre à des défis épiques et intenses ! Jouez gratuitement, utilisez vos cartes pour jeter des sorts, invoquer des créatures et donner des ordres aux héros de Warcraft lors de duels légendaires et stratégiques.</string>
+    <string name="publisher1">Blizzard</string>
+    <string name="developper1">Blizzard</string>
+    <string name="publisher">Publisher</string>
+    <string name="developper">Developper</string>
+    <string name="title_description">Title</string>
 </resources>

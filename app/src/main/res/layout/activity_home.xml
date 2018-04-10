@@ -52,6 +52,7 @@
                 android:layout_height="@android:dimen/thumbnail_height"
                 android:background="@drawable/hearthstone"
                 android:contentDescription="game_img"
+                android:elevation="0dp"
                 android:scaleType="fitCenter"
                 android:visibility="visible" />
 

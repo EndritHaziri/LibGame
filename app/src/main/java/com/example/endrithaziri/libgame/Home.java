@@ -15,7 +15,7 @@ public class Home extends AppCompatActivity {
 
     private TextView mTextMessage;
     private ImageButton imageButton;
-
+    MenuItem item ;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,7 +50,22 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle item selection
+            int id = item.getItemId();
+          //      case R.id.navigation_home:
+          //          Intent homepage = new Intent (Home.this,Home.class);
+          //          this.startActivity(homepage);
+          //          return true;
+              if(id = R.id.navigation_add){
+                    Intent addgame = new Intent (Home.this,AddGame.class);
+                    startActivity(addgame);
+                    return true;
 
+                    return super.onOptionsItemSelected(item);}
+            }
+        }
 
 
         mTextMessage = (TextView) findViewById(R.id.message);

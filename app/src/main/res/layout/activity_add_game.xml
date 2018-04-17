@@ -44,14 +44,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/addGameTitle" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewAddGame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonAddImageGame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"

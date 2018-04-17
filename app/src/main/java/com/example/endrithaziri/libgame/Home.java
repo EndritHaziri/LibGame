@@ -1,5 +1,6 @@
 package com.example.endrithaziri.libgame;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,12 +23,18 @@ public class Home extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            System.out.println("Plop");
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    Intent homepage = new Intent (Home.this,Home.class);
+                    Home.this.startActivity(homepage);
                     return true;
+
                 case R.id.navigation_add:
-                    mTextMessage.setText(R.string.title_add);
+                    Intent addgame = new Intent (Home.this,AddGame.class);
+                    Home.this.startActivity(addgame);
                     return true;
             }
             return false;
@@ -50,27 +57,11 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle item selection
-            int id = item.getItemId();
-          //      case R.id.navigation_home:
-          //          Intent homepage = new Intent (Home.this,Home.class);
-          //          this.startActivity(homepage);
-          //          return true;
-              if(id = R.id.navigation_add){
-                    Intent addgame = new Intent (Home.this,AddGame.class);
-                    startActivity(addgame);
-                    return true;
-
-                    return super.onOptionsItemSelected(item);}
-            }
-        }
 
 
         mTextMessage = (TextView) findViewById(R.id.message);
-  //      BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-    //    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
 }

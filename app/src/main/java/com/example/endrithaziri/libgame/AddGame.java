@@ -30,6 +30,7 @@ public class AddGame extends AppCompatActivity {
                 openGallery();
             }
         });
+
     }
 
     private void openGallery() {

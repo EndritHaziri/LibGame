@@ -15,4 +15,14 @@
     <string name="publisher">Publisher</string>
     <string name="developper">Developper</string>
     <string name="title_description">Title</string>
+    <string name="title_activity_add_game">Add Game</string>
+    <string name="add_description">Description</string>
+    <string name="chooseImage">Choose an image</string>
+    <string-array name="dev_list">
+        <item>Ubisoft</item>
+        <item>Activision</item>
+        <item>Blizzard</item>
+    </string-array>
+    <string name="title_activity_add_developer">Add Developer</string>
+    <string name="title_activity_add_publisher">Add Publisher</string>
 </resources>

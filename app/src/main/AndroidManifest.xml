@@ -11,19 +11,28 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Home"
-            android:label="@string/app_name"
-
-
-            >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GamePage"/>
-        <activity android:name=".AddGame"/>
-        <activity android:name=".AddEvaluation"/>
+        <activity
+            android:name=".GamePage"
+            android:label="Game Page" />
+        <activity
+            android:name=".AddEvaluation"
+            android:label="Add Evaluation" />
+        <activity
+            android:name=".AddGame"
+            android:label="@string/title_activity_add_game" />
+        <activity
+            android:name=".AddDeveloper"
+            android:label="@string/title_activity_add_developer" />
+        <activity
+            android:name=".AddPublisher"
+            android:label="@string/title_activity_add_publisher"></activity>
     </application>
 
 </manifest>

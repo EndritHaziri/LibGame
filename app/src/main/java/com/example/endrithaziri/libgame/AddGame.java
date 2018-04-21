@@ -1,18 +1,28 @@
 package com.example.endrithaziri.libgame;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import view_model.GameViewModel;
+
 public class AddGame extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 100;
-    Button button;
+    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+
+
+
+    Button buttonImg;
+    BottomNavigationItemView buttonAddGame;
     ImageView imageView;
     Uri imageUri;
 
@@ -21,16 +31,38 @@ public class AddGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
 
-        button = (Button) findViewById(R.id.buttonAddImageGame);
+
+
+        buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
+        buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
         imageView = (ImageView) findViewById(R.id.imageViewAddGame);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery();
             }
         });
 
+        buttonAddGame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                saveData();
+            }
+        });
+
+    }
+
+    private void saveData() {
+        Intent replyIntent = new Intent();
+        if (TextUtils.isEmpty("test")) {
+            setResult(RESULT_CANCELED, replyIntent);
+        } else {
+            String word = "Far Cry";
+            replyIntent.putExtra(EXTRA_REPLY, word);
+            setResult(RESULT_OK, replyIntent);
+        }
+        finish();
     }
 
     private void openGallery() {

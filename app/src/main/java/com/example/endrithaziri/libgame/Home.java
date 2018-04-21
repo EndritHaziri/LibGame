@@ -1,9 +1,12 @@
 package com.example.endrithaziri.libgame;
 
 import android.app.Fragment;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuView;
@@ -12,10 +15,17 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.List;
+
+import entity.Game;
+import view_model.GameViewModel;
+
 public class Home extends AppCompatActivity {
 
     private TextView mTextMessage;
     private ImageButton imageButton;
+    private GameViewModel gameViewModel;
+
     MenuItem item ;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -45,7 +55,15 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_game);
+        setContentView(R.layout.activity_home);
+
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {
+            @Override
+            public void onChanged(@Nullable List<Game> games) {
+                //adapter.setGames(games);
+            }
+        });
 
         /*imageButton = findViewById(R.id.imageGame1);
         imageButton.setOnClickListener(new View.OnClickListener() {

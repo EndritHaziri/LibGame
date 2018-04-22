@@ -56,8 +56,7 @@ public class Home extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-<<<<<<< HEAD
-=======
+
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {
@@ -66,7 +65,7 @@ public class Home extends AppCompatActivity {
                 //adapter.setGames(games);
             }
         });
->>>>>>> e17598791eb5a0f7a2fa4e9f1f9f7ecbf909e46d
+
 
        /* imageButton = findViewById(R.id.imageGame1);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -76,16 +75,13 @@ public class Home extends AppCompatActivity {
                 Home.this.startActivity(gamepage);
 
             }
-<<<<<<< HEAD
+
 
         });*/
 
 
 
-=======
-        });*/
 
->>>>>>> e17598791eb5a0f7a2fa4e9f1f9f7ecbf909e46d
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

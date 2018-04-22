@@ -34,7 +34,7 @@ public class AddGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_game);
 
 
-        button = (Button) findViewById(R.id.buttonAddImageGame);
+        buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
 
         setContentView(R.layout.activity_add_game);
 

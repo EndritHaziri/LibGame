@@ -45,9 +45,9 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_game);
+        setContentView(R.layout.activity_home);
 
-        /*imageButton = findViewById(R.id.imageGame1);
+       /* imageButton = findViewById(R.id.imageGame1);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,13 +55,11 @@ public class Home extends AppCompatActivity {
                 Home.this.startActivity(gamepage);
 
             }
-<<<<<<< HEAD
-        });
 
-
-=======
         });*/
->>>>>>> 2c58e841e4a473e489d60320dc9c160d2ab86067
+
+
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

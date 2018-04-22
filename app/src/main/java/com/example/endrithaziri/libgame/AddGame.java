@@ -44,10 +44,9 @@ public class AddGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        setContentView(R.layout.activity_addgame);
-=======
+
         setContentView(R.layout.activity_add_game);
+
 
         button = (Button) findViewById(R.id.buttonAddImageGame);
         imageView = (ImageView) findViewById(R.id.imageViewAddGame);
@@ -59,7 +58,7 @@ public class AddGame extends AppCompatActivity {
                 System.out.println("click");
             }
         });
->>>>>>> 2c58e841e4a473e489d60320dc9c160d2ab86067
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
  //       BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

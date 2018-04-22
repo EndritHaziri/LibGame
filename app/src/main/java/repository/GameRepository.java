@@ -22,6 +22,7 @@ public class GameRepository {
     }
 
     public List<Game> getAllGames() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!! GameRepository getAllGames !!!!!!!!!!!!!!!!!!!!");
         return allGames;
     }
 

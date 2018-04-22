@@ -33,9 +33,8 @@ import view_model.GameViewModel;
 
 public class Home extends AppCompatActivity {
 
-    private ImageButton imageButton;
     private GameViewModel gameViewModel;
-    private RelativeLayout relativeLayout;
+    private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
     MenuItem item ;
@@ -66,7 +65,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        relativeLayout = findViewById(R.id.relativeHomeLayout);
+        linearLayout = findViewById(R.id.linearHomeLayout);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
@@ -75,7 +74,7 @@ public class Home extends AppCompatActivity {
 
         List<Game> games = gameViewModel.getAllGames();
         
-        for (Game g:games) {
+        for (Game g : games) {
             System.out.println(g.getName());
             ImageButton button = new ImageButton(this);
             button.setImageResource(R.drawable.skyrim);
@@ -88,8 +87,8 @@ public class Home extends AppCompatActivity {
                     Home.this.startActivity(gamePage);
                 }
             });
-            relativeLayout.addView(button);
-            relativeLayout.addView(new View(this));
+            linearLayout.addView(button);
+            //linearLayout.addView(new View(this));
         }
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

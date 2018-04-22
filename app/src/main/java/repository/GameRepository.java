@@ -13,7 +13,7 @@ import entity.Game;
 public class GameRepository {
 
     private GameDao gameDao;
-    private LiveData<List<Game>> allGames;
+    private List<Game> allGames;
 
     public GameRepository(Application application) {
         LibGameRoomDatabase db = LibGameRoomDatabase.getDatabase(application);
@@ -21,7 +21,7 @@ public class GameRepository {
         allGames = gameDao.getAllGames();
     }
 
-    public LiveData<List<Game>> getAllGames() {
+    public List<Game> getAllGames() {
         return allGames;
     }
 

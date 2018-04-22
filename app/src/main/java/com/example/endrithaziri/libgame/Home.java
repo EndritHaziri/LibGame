@@ -13,9 +13,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuView;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Collection;
@@ -28,9 +32,9 @@ import view_model.GameViewModel;
 
 public class Home extends AppCompatActivity {
 
-    private TextView mTextMessage;
     private ImageButton imageButton;
     private GameViewModel gameViewModel;
+    private LinearLayout linearLayout;
 
     MenuItem item ;
 
@@ -63,23 +67,30 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        linearLayout = findViewById(R.id.layoutHome);
+
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         List<Game> games = gameViewModel.getAllGames();
 
         for (Game g:games) {
-            System.out.println(g.getName());;
+            System.out.println(g.getName());
+            ImageButton button = new ImageButton(this);
+            button.setImageResource(R.drawable.skyrim);
+            linearLayout.addView(button);
+            linearLayout.addView(new View(this));
         }
 
-        imageButton = findViewById(R.id.imageGame1);
+        /*imageButton = findViewById(R.id.imageGame1);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent gamepage = new Intent (Home.this,GamePage.class);
                 Home.this.startActivity(gamepage);
             }
-        });
+        });*/
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }

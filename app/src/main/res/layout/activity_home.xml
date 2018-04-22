@@ -42,58 +42,11 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView">
 
         <LinearLayout
+            android:id="@+id/layoutHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/imageGame1"
-                android:layout_width="match_parent"
-                android:layout_height="@android:dimen/thumbnail_height"
-                android:background="@drawable/hearthstone"
-                android:contentDescription="game_img"
-                android:elevation="0dp"
-                android:scaleType="fitCenter"
-                android:visibility="visible" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-
-            <ImageButton
-                android:id="@+id/imageGame2"
-                android:layout_width="match_parent"
-                android:layout_height="@android:dimen/thumbnail_height"
-                android:background="@drawable/leagueoflegends"
-                android:contentDescription="game_img"
-                android:scaleType="fitCenter"
-                android:visibility="visible" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-            <ImageButton
-                android:id="@+id/imageGame3"
-                android:layout_width="match_parent"
-                android:layout_height="@android:dimen/thumbnail_height"
-                android:background="@drawable/pubg"
-                android:contentDescription="game_img"
-                android:scaleType="fitCenter"
-                android:visibility="visible" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-
-            <ImageButton
-                android:id="@+id/imageGame4"
-                android:layout_width="match_parent"
-                android:layout_height="@android:dimen/thumbnail_height"
-                android:background="@drawable/skyrim"
-                android:contentDescription="game_img"
-                android:scaleType="fitCenter"
-                android:visibility="visible" />
-
+            android:orientation="vertical"
+            android:visibility="visible">
 
 
         </LinearLayout>

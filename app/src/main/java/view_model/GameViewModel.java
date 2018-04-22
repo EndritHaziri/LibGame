@@ -4,7 +4,9 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.webkit.ConsoleMessage;
 
+import java.io.Console;
 import java.util.List;
 
 import entity.Game;
@@ -22,6 +24,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public List<Game> getAllGames() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!! GameViewModel getAllGames !!!!!!!!!!!!!!!!!!!!");
         return allGames;
     }
 

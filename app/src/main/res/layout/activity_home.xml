@@ -41,17 +41,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView">
 
-        <RelativeLayout
-            android:id="@+id/relativeHomeLayout"
+        <LinearLayout
+            android:id="@+id/linearHomeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin">
-
-        </RelativeLayout>
+            android:orientation="vertical"></LinearLayout>
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

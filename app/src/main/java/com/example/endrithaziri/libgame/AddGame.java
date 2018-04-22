@@ -29,20 +29,20 @@ public class AddGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
+
 
         setContentView(R.layout.activity_add_game);
 
 
         button = (Button) findViewById(R.id.buttonAddImageGame);
-=======
+
         setContentView(R.layout.activity_add_game);
 
 
 
         buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
         buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
->>>>>>> e17598791eb5a0f7a2fa4e9f1f9f7ecbf909e46d
+
         imageView = (ImageView) findViewById(R.id.imageViewAddGame);
 
         buttonImg.setOnClickListener(new View.OnClickListener() {
@@ -51,10 +51,7 @@ public class AddGame extends AppCompatActivity {
                 openGallery();
             }
         });
-<<<<<<< HEAD
 
-=======
->>>>>>> e17598791eb5a0f7a2fa4e9f1f9f7ecbf909e46d
 
         buttonAddGame.setOnClickListener(new View.OnClickListener(){
             @Override

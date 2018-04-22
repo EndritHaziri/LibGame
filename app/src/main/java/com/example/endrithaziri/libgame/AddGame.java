@@ -1,6 +1,5 @@
 package com.example.endrithaziri.libgame;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,16 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import view_model.GameViewModel;
-
 public class AddGame extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 100;
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
 
-
-
     Button buttonImg;
+    Button buttonAddDev;
+    Button buttonAddPub;
     BottomNavigationItemView buttonAddGame;
     ImageView imageView;
     Uri imageUri;
@@ -31,12 +28,13 @@ public class AddGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
 
-
-
         buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
+        buttonAddDev = (Button) findViewById(R.id.buttonAddDev);
+        buttonAddPub = (Button) findViewById(R.id.buttonAddPub);
         buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
         imageView = (ImageView) findViewById(R.id.imageViewAddGame);
 
+        // Listener button image
         buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,10 +42,29 @@ public class AddGame extends AppCompatActivity {
             }
         });
 
+        // Listener menu button add
         buttonAddGame.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 saveData();
+            }
+        });
+
+        // Listener button add developer
+        buttonAddDev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addDev = new Intent (AddGame.this, AddDeveloper.class);
+                AddGame.this.startActivity(addDev);
+            }
+        });
+
+        // Listener button add publisher
+        buttonAddPub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addPub = new Intent (AddGame.this, AddPublisher.class);
+                AddGame.this.startActivity(addPub);
             }
         });
 

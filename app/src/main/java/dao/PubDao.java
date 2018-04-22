@@ -22,6 +22,9 @@ public interface PubDao {
     @Query("SELECT * FROM pub_table ORDER BY name ASC")
     LiveData<List<Publisher>> getAllPublisher();
 
+    @Query("SELECT * FROM pub_table WHERE id = :idPub")
+    Publisher getDevById(int idPub);
+
     /* ==== DELETE ==== */
     @Query("DELETE FROM pub_table")
     void deleteAll();

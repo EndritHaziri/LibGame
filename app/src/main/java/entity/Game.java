@@ -24,8 +24,12 @@ public class Game {
     private String description;
 
     @NonNull
-    @ColumnInfo(name = "developper_id")
-    private int developper_id;
+    @ColumnInfo(name = "url_image")
+    private String url_image;
+
+    @NonNull
+    @ColumnInfo(name = "developer_id")
+    private int developer_id;
 
     @NonNull
     @ColumnInfo(name = "publisher_id")
@@ -37,10 +41,11 @@ public class Game {
 
     /* ==== CONSTRUCTOR ==== */
 
-    public Game(String name, String description, int developper_id, int publisher_id) {
+    public Game(String name, String description, String url_image, int developer_id, int publisher_id) {
         this.name = name;
         this.description = description;
-        this.developper_id = developper_id;
+        this.url_image = url_image;
+        this.developer_id = developer_id;
         this.publisher_id = publisher_id;
     }
 
@@ -74,12 +79,12 @@ public class Game {
     }
 
     @NonNull
-    public int getDevelopper_id() {
-        return developper_id;
+    public int getDeveloper_id() {
+        return developer_id;
     }
 
-    public void setDevelopper_id(@NonNull int developper_id) {
-        this.developper_id = developper_id;
+    public void setDeveloper_id(@NonNull int developer_id) {
+        this.developer_id = developer_id;
     }
 
     @NonNull
@@ -100,5 +105,12 @@ public class Game {
         this.evaluation_id = evaluation_id;
     }
 
+    @NonNull
+    public String getUrl_image() {
+        return url_image;
+    }
 
+    public void setUrl_image(@NonNull String url_image) {
+        this.url_image = url_image;
+    }
 }

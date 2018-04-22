@@ -22,6 +22,9 @@ public interface DevDao {
     @Query("SELECT * FROM dev_table ORDER BY name ASC")
     LiveData<List<Developer>> getAllDeveloper();
 
+    @Query("SELECT * FROM dev_table WHERE id = :idDev")
+    Developer getDevById(int idDev);
+
     /* ==== DELETE ==== */
     @Query("DELETE FROM dev_table")
     void deleteAll();

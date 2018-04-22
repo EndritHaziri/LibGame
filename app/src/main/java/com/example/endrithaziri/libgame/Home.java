@@ -59,13 +59,12 @@ public class Home extends AppCompatActivity {
 
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-        gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {
-            @Override
-            public void onChanged(@Nullable List<Game> games) {
-                //adapter.setGames(games);
-            }
-        });
+        gameViewModel.insert(new Game("Far Cry", "Jeu de tir", "farcry.png", 1,1));
+        List<Game> games = (List<Game>) gameViewModel.getAllGames();
 
+        for (Game g:games) {
+            System.out.println(g.getName());
+        }
 
        /* imageButton = findViewById(R.id.imageGame1);
         imageButton.setOnClickListener(new View.OnClickListener() {

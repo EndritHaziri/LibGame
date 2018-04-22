@@ -21,8 +21,8 @@ public interface GameDao {
     @Query("SELECT * FROM game_table ORDER BY name ASC")
     LiveData<List<Game>> getAllGames();
 
-    //@Query("SELECT * FROM game_table WHERE id = idGame")
-    //Game getGameById(int idGame);
+    @Query("SELECT * FROM game_table WHERE id = :idGame")
+    Game getGameById(int idGame);
 
     /* ==== DELETE ==== */
     @Query("DELETE FROM game_table")

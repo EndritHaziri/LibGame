@@ -1,5 +1,6 @@
 package com.example.endrithaziri.libgame;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,7 +15,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -36,34 +40,31 @@ public class AddGame extends AppCompatActivity {
     BottomNavigationItemView buttonAddGame;
     ImageView image;
     Uri imageUri;
+    String imgData;
     private GameViewModel gameViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_add_game);
 
-
-        buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
-
-        setContentView(R.layout.activity_add_game);
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
         buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
         buttonAddDev = (Button) findViewById(R.id.buttonAddDev);
         buttonAddPub = (Button) findViewById(R.id.buttonAddPub);
         buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
-
         image = (ImageView) findViewById(R.id.imageViewAddGame);
 
-        SharedPreferences myPrefrence = getPreferences(MODE_PRIVATE);
-        String imageS = myPrefrence.getString("imagePreferance", "");
+        SharedPreferences myPreference = getPreferences(MODE_PRIVATE);
+        String imageS = myPreference.getString("imagePreference", "");
         Bitmap imageB;
         if(!imageS.equals("")) {
             imageB = decodeToBase64(imageS);
             image.setImageBitmap(imageB);
         }
+
+        /* ==== ADD LISTENERS ==== */
 
         // Listener button image
         buttonImg.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +73,6 @@ public class AddGame extends AppCompatActivity {
                 openGallery(view);
             }
         });
-
 
         // Listener menu button add
         buttonAddGame.setOnClickListener(new View.OnClickListener(){
@@ -101,23 +101,33 @@ public class AddGame extends AppCompatActivity {
         });
 
     }
+
     private void saveData() {
-        Intent replyIntent = new Intent();
-        if (TextUtils.isEmpty("test")) {
-            setResult(RESULT_CANCELED, replyIntent);
-        } else {
-            String word = "Far Cry";
-            replyIntent.putExtra(EXTRA_REPLY, word);
-            setResult(RESULT_OK, replyIntent);
-        }
-        finish();
+        String name, description, id_publisher, id_developer;
+        EditText etName, etDescription;
+        Spinner spinnerDev, spinnerPub;
+
+        etName = findViewById(R.id.addGameTitle);
+        name = etName.getText().toString();
+
+        etDescription = findViewById(R.id.addGameDescription);
+        description = etDescription.getText().toString();
+
+        spinnerDev = findViewById(R.id.spinnerDev);
+        id_developer = spinnerDev.getSelectedItem().toString();
+
+        spinnerPub = findViewById(R.id.spinnerPub);
+        id_publisher = spinnerPub.getSelectedItem().toString();
+
+        gameViewModel.insert(new Game(name, description, imgData, 1, 1));
     }
+
     public void openGallery(View v){
         Intent intent = new Intent();
-// Show only images, no videos or anything else
+        // Show only images, no videos or anything else
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-// Always show the chooser (if there are multiple options available)
+        // Always show the chooser (if there are multiple options available)
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
@@ -133,13 +143,14 @@ public class AddGame extends AppCompatActivity {
                 stream = getContentResolver().openInputStream(data.getData());
                 Bitmap realImage = BitmapFactory.decodeStream(stream);
                 image.setImageBitmap(realImage);
+                imgData = encodeToBase64(realImage);
 
-
-                SharedPreferences myPrefrence = getPreferences(MODE_PRIVATE);
+                /*SharedPreferences myPrefrence = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefrence.edit();
                 editor.putString("imagePreferance", encodeToBase64(realImage));
+                imgData = encodeToBase64(realImage);
 
-                editor.commit();
+                editor.commit();*/
             }
             catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
@@ -158,7 +169,7 @@ public class AddGame extends AppCompatActivity {
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        Log.d("Image Log:", imageEncoded);
+        //Log.d("Image Log:", imageEncoded);
         return imageEncoded;
     }
 

@@ -1,8 +1,11 @@
 package com.example.endrithaziri.libgame;
 
 import android.app.Fragment;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +18,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import entity.Game;
 import view_model.GameViewModel;
@@ -57,30 +63,21 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-        gameViewModel.insert(new Game("Far Cry", "Jeu de tir", "farcry.png", 1,1));
-        List<Game> games = (List<Game>) gameViewModel.getAllGames();
+        List<Game> games = gameViewModel.getAllGames();
 
         for (Game g:games) {
-            System.out.println(g.getName());
+            System.out.println(g.getName());;
         }
 
-       /* imageButton = findViewById(R.id.imageGame1);
+        imageButton = findViewById(R.id.imageGame1);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent gamepage = new Intent (Home.this,GamePage.class);
                 Home.this.startActivity(gamepage);
-
             }
-
-
-        });*/
-
-
-
-
+        });
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

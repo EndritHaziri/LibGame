@@ -13,7 +13,7 @@ import repository.GameRepository;
 public class GameViewModel extends AndroidViewModel {
 
     private GameRepository gameRepository;
-    private LiveData<List<Game>> allGames;
+    private List<Game> allGames;
 
     public GameViewModel(@NonNull Application application) {
         super(application);
@@ -21,7 +21,7 @@ public class GameViewModel extends AndroidViewModel {
         allGames = gameRepository.getAllGames();
     }
 
-    public LiveData<List<Game>> getAllGames() {
+    public List<Game> getAllGames() {
         return allGames;
     }
 

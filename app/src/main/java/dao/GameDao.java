@@ -19,7 +19,7 @@ public interface GameDao {
 
     /* ==== GET ==== */
     @Query("SELECT * FROM game_table ORDER BY name ASC")
-    LiveData<List<Game>> getAllGames();
+    List<Game> getAllGames();
 
     @Query("SELECT * FROM game_table WHERE id = :idGame")
     Game getGameById(int idGame);

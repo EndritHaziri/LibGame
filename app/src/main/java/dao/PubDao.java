@@ -20,7 +20,7 @@ public interface PubDao {
 
     /* ==== GET ==== */
     @Query("SELECT * FROM pub_table ORDER BY name ASC")
-    LiveData<List<Publisher>> getAllPublisher();
+    List<Publisher> getAllPublisher();
 
     @Query("SELECT * FROM pub_table WHERE id = :idPub")
     Publisher getDevById(int idPub);

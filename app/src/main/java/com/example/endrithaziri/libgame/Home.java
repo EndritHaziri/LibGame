@@ -84,8 +84,8 @@ public class Home extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    Intent gamepage = new Intent (Home.this, GamePage.class);
-                    Home.this.startActivity(gamepage);
+                    Intent gamePage = new Intent (Home.this, GamePage.class);
+                    Home.this.startActivity(gamePage);
                 }
             });
             relativeLayout.addView(button);

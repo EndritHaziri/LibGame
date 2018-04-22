@@ -61,10 +61,6 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            Game game = new Game("Far Cry", "Jeu de tir", "farcry.png", 1,1);
-            mDao.insert(game);
-            game = new Game("WoW", "MEUPORG", "wow.png", 1,1);
-            mDao.insert(game);
             return null;
         }
     }

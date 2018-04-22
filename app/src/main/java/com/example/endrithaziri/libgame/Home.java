@@ -43,8 +43,7 @@ public class Home extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            System.out.println("Plop");
+            
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:

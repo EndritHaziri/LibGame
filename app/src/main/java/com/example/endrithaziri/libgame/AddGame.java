@@ -1,68 +1,80 @@
 package com.example.endrithaziri.libgame;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import view_model.GameViewModel;
 
 public class AddGame extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 100;
-    private TextView mTextMessage;
-    private Button button;
-    private ImageView imageView;
-    private Uri imageUri;
+    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
+
+    Button buttonImg;
+    BottomNavigationItemView buttonAddGame;
+    ImageView imageView;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+<<<<<<< HEAD
 
         setContentView(R.layout.activity_add_game);
 
 
         button = (Button) findViewById(R.id.buttonAddImageGame);
+=======
+        setContentView(R.layout.activity_add_game);
+
+
+
+        buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
+        buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
+>>>>>>> e17598791eb5a0f7a2fa4e9f1f9f7ecbf909e46d
         imageView = (ImageView) findViewById(R.id.imageViewAddGame);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery();
-                System.out.println("click");
+            }
+        });
+<<<<<<< HEAD
+
+=======
+>>>>>>> e17598791eb5a0f7a2fa4e9f1f9f7ecbf909e46d
+
+        buttonAddGame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                saveData();
             }
         });
 
+    }
 
-        mTextMessage = (TextView) findViewById(R.id.message);
- //       BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    private void saveData() {
+        Intent replyIntent = new Intent();
+        if (TextUtils.isEmpty("test")) {
+            setResult(RESULT_CANCELED, replyIntent);
+        } else {
+            String word = "Far Cry";
+            replyIntent.putExtra(EXTRA_REPLY, word);
+            setResult(RESULT_OK, replyIntent);
+        }
+        finish();
     }
 
     private void openGallery() {

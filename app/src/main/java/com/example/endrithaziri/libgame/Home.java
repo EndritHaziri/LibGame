@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Collection;
@@ -34,7 +35,8 @@ public class Home extends AppCompatActivity {
 
     private ImageButton imageButton;
     private GameViewModel gameViewModel;
-    private LinearLayout linearLayout;
+    private RelativeLayout relativeLayout;
+    private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
     MenuItem item ;
 
@@ -43,9 +45,7 @@ public class Home extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            
-
-            switch (item.getItemId()) {
+                        switch (item.getItemId()) {
                 case R.id.navigation_home:
                     Intent homepage = new Intent (Home.this,Home.class);
                     Home.this.startActivity(homepage);
@@ -66,29 +66,31 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        linearLayout = findViewById(R.id.layoutHome);
+        relativeLayout = findViewById(R.id.relativeHomeLayout);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-        List<Game> games = gameViewModel.getAllGames();
 
+        gameViewModel.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", 1, 1));
+        gameViewModel.insert(new Game("Rocket League", "Le sel est présent", "rl.png", 1, 1));
+
+        List<Game> games = gameViewModel.getAllGames();
+        
         for (Game g:games) {
             System.out.println(g.getName());
             ImageButton button = new ImageButton(this);
             button.setImageResource(R.drawable.skyrim);
-            linearLayout.addView(button);
-            linearLayout.addView(new View(this));
+            button.setLayoutParams(params);
+            button.setMaxHeight(200);
+            button.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Intent gamepage = new Intent (Home.this, GamePage.class);
+                    Home.this.startActivity(gamepage);
+                }
+            });
+            relativeLayout.addView(button);
+            relativeLayout.addView(new View(this));
         }
-
-        /*imageButton = findViewById(R.id.imageGame1);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent gamepage = new Intent (Home.this,GamePage.class);
-                Home.this.startActivity(gamepage);
-            }
-        });*/
-
-
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

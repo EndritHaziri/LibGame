@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import entity.Game;
+import view_model.GameViewModel;
+
 public class AddGame extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 100;
@@ -22,6 +25,7 @@ public class AddGame extends AppCompatActivity {
     BottomNavigationItemView buttonAddGame;
     ImageView imageView;
     Uri imageUri;
+    private GameViewModel gameViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

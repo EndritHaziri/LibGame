@@ -120,6 +120,9 @@ public class AddGame extends AppCompatActivity {
         id_publisher = spinnerPub.getSelectedItem().toString();
 
         gameViewModel.insert(new Game(name, description, imgData, 1, 1));
+        /*Toast.makeText(AddGame.this, "Game saved", Toast.LENGTH_SHORT).show();
+        Intent home = new Intent (AddGame.this, Home.class);
+        AddGame.this.startActivity(home);*/
     }
 
     public void openGallery(View v){

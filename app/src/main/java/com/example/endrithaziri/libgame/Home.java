@@ -1,38 +1,25 @@
 package com.example.endrithaziri.libgame;
 
-import android.app.Fragment;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuView;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import entity.Game;
 import view_model.GameViewModel;
+
+import static com.example.endrithaziri.libgame.AddGame.decodeToBase64;
 
 public class Home extends AppCompatActivity {
 
@@ -82,6 +69,8 @@ public class Home extends AppCompatActivity {
         for (Game g : games) {
             System.out.println(g.getName());
             ImageButton button = new ImageButton(this);
+            //Bitmap bitmap = decodeToBase64(g.getUrl_image().trim());
+            //button.setImageBitmap(bitmap);
             button.setImageResource(R.drawable.skyrim);
             button.setLayoutParams(params);
             button.setAdjustViewBounds(true);

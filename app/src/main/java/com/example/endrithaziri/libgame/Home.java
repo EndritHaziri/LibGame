@@ -80,7 +80,7 @@ public class Home extends AppCompatActivity {
             ImageButton button = new ImageButton(this);
             button.setImageResource(R.drawable.skyrim);
             button.setLayoutParams(params);
-            button.setMaxHeight(200);
+            button.setAdjustViewBounds(true);
             button.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {

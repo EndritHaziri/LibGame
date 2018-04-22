@@ -18,7 +18,7 @@ public interface GameDao {
     void insert(Game game);
 
     /* ==== GET ==== */
-    @Query("SELECT * FROM game_table ORDER BY name ASC")
+    @Query("SELECT * FROM game_table")
     List<Game> getAllGames();
 
     @Query("SELECT * FROM game_table WHERE id = :idGame")

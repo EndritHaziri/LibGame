@@ -47,11 +47,10 @@ public class AddDeveloper extends AppCompatActivity {
     protected void add() {
         String name;
         EditText etName = findViewById(R.id.editTextDevelopper);
-
         name = etName.getText().toString();
-
         devViewModel.insert(new Developer(name));
         Toast.makeText(AddDeveloper.this, "Developer saved", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 }

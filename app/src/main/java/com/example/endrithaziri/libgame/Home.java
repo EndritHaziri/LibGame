@@ -59,9 +59,6 @@ public class Home extends AppCompatActivity {
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
-        //gameViewModel.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", 1, 1));
-        //gameViewModel.insert(new Game("Rocket League", "Le sel est présent", "rl.png", 1, 1));
-
         List<Game> games = gameViewModel.getAllGames();
         int cpt = games.size();
         System.out.println("nbr of games : " + cpt);

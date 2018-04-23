@@ -28,4 +28,7 @@ public interface DevDao {
     /* ==== DELETE ==== */
     @Query("DELETE FROM dev_table")
     void deleteAll();
+
+    @Query("DELETE FROM dev_table WHERE id = :idDev")
+    void deleteDeveloper(int idDev);
 }

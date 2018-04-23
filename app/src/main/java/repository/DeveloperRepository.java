@@ -30,6 +30,14 @@ public class DeveloperRepository {
         return allDeveloper;
     }
 
+    public Developer getDevById(int id) {
+        return devDao.getDevById(id);
+    }
+
+    public void deleteDeveloper(int id) {
+        devDao.deleteDeveloper(id);
+    }
+
     public void insert(Developer developer) {
         new insertAsyncTask(devDao).execute(developer);
     }

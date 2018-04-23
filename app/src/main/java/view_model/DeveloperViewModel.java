@@ -30,6 +30,14 @@ public class DeveloperViewModel extends AndroidViewModel {
         return allDeveloper;
     }
 
+    public Developer getDevById(int id) {
+        return developerRepository.getDevById(id);
+    }
+
+    public void deleteDeveloper(int id) {
+        developerRepository.deleteDeveloper(id);
+    }
+
     public void insert(Developer developer) {
         developerRepository.insert(developer);
     }

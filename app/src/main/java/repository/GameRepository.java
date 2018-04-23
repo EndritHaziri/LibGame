@@ -22,8 +22,11 @@ public class GameRepository {
     }
 
     public List<Game> getAllGames() {
-        System.out.println("!!!!!!!!!!!!!!!!!!!! GameRepository getAllGames !!!!!!!!!!!!!!!!!!!!");
         return allGames;
+    }
+
+    public Game getGameById(int id) {
+        return gameDao.getGameById(id);
     }
 
     public void insert(Game game) {

@@ -2,8 +2,6 @@ package com.example.endrithaziri.libgame;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,8 +16,6 @@ import java.util.List;
 
 import entity.Game;
 import view_model.GameViewModel;
-
-import static com.example.endrithaziri.libgame.AddGame.decodeToBase64;
 
 public class Home extends AppCompatActivity {
 
@@ -63,7 +59,7 @@ public class Home extends AppCompatActivity {
         int cpt = games.size();
         System.out.println("nbr of games : " + cpt);
         
-        for (Game g : games) {
+        for (final Game g : games) {
             System.out.println(g.getName());
             ImageButton button = new ImageButton(this);
             //Bitmap bitmap = decodeToBase64(g.getUrl_image().trim());
@@ -75,6 +71,7 @@ public class Home extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent gamePage = new Intent (Home.this, GamePage.class);
+                    gamePage.putExtra("id", g.getId());
                     Home.this.startActivity(gamePage);
                 }
             });
@@ -85,5 +82,4 @@ public class Home extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-
 }

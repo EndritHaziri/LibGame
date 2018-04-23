@@ -4,7 +4,6 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -52,17 +51,31 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final GameDao mDao;
+        private final GameDao gameDao;
+        private final DevDao devDao;
+        private final PubDao pubDao;
 
         PopulateDbAsync(LibGameRoomDatabase db) {
-            mDao = db.gameDao();
+            gameDao = db.gameDao();
+            devDao = db.devDao();
+            pubDao = db.pubDao();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
-            mDao.deleteAll();
-            mDao.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", 1, 1));
-            mDao.insert(new Game("Rocket League", "Le sel est présent", "rl.png", 1, 1));
+            gameDao.deleteAll();
+            gameDao.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", 7, 9));
+            gameDao.insert(new Game("Rocket League", "Le sel est présent", "rl.png", 8, 7));
+
+            /*devDao.deleteAll();*/
+            devDao.insert(new Developer("2K Games"));
+            devDao.insert(new Developer("Activision"));
+            devDao.insert(new Developer("Blizzard Entertainment"));
+
+            /*pubDao.deleteAll();*/
+            pubDao.insert(new Publisher("2K Games"));
+            pubDao.insert(new Publisher("Bethesda Softworks"));
+            pubDao.insert(new Publisher("Capcom"));
             return null;
         }
     }

@@ -28,6 +28,14 @@ public class PublisherViewModel extends AndroidViewModel {
         return allPublisher;
     }
 
+    public Publisher getPubById(int id) {
+        return publisherRepository.getPubById(id);
+    }
+
+    public void deletePublisher(int id) {
+        publisherRepository.deletePublisher(id);
+    }
+
     public void insert(Publisher publisher) {
         publisherRepository.insert(publisher);
     }

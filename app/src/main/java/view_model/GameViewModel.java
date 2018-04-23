@@ -24,8 +24,11 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public List<Game> getAllGames() {
-        System.out.println("!!!!!!!!!!!!!!!!!!!! GameViewModel getAllGames !!!!!!!!!!!!!!!!!!!!");
         return allGames;
+    }
+
+    public Game getGameById(int id) {
+        return gameRepository.getGameById(id);
     }
 
     public void insert(Game game) {

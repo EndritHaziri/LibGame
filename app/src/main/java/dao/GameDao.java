@@ -27,4 +27,7 @@ public interface GameDao {
     /* ==== DELETE ==== */
     @Query("DELETE FROM game_table")
     void deleteAll();
+
+    @Query("DELETE FROM game_table WHERE id = :idGame")
+    void deleteGame(int idGame);
 }

@@ -23,9 +23,12 @@ public interface PubDao {
     List<Publisher> getAllPublisher();
 
     @Query("SELECT * FROM pub_table WHERE id = :idPub")
-    Publisher getDevById(int idPub);
+    Publisher getPubById(int idPub);
 
     /* ==== DELETE ==== */
     @Query("DELETE FROM pub_table")
     void deleteAll();
+
+    @Query("DELETE FROM pub_table WHERE id = :idPub")
+    void deletePublisher(int idPub);
 }

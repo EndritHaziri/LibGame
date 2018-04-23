@@ -28,6 +28,14 @@ public class PublisherRepository {
         return allPublisher;
     }
 
+    public Publisher getPubById(int id) {
+        return pubDao.getPubById(id);
+    }
+
+    public void deletePublisher(int id) {
+        pubDao.deletePublisher(id);
+    }
+
     public void insert(Publisher publisher) {
         new insertAsyncTask(pubDao).execute(publisher);
     }

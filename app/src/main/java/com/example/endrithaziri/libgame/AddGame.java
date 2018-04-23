@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,9 +26,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import entity.Developer;
 import entity.Game;
+import view_model.DeveloperViewModel;
 import view_model.GameViewModel;
+import view_model.PublisherViewModel;
 
 public class AddGame extends AppCompatActivity {
 
@@ -41,7 +47,10 @@ public class AddGame extends AppCompatActivity {
     ImageView image;
     Uri imageUri;
     String imgData;
+    Spinner spinnerDev, spinnerPub;
     private GameViewModel gameViewModel;
+    private DeveloperViewModel developerViewModel;
+    private PublisherViewModel publisherViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +58,32 @@ public class AddGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_game);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
 
         buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
         buttonAddDev = (Button) findViewById(R.id.buttonAddDev);
         buttonAddPub = (Button) findViewById(R.id.buttonAddPub);
         buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
         image = (ImageView) findViewById(R.id.imageViewAddGame);
+
+        spinnerDev = findViewById(R.id.spinnerDev);
+        spinnerPub = findViewById(R.id.spinnerPub);
+
+        /*List<String> spinnerArrayDev = new ArrayList<>();
+        List<Developer> listDev = developerViewModel.getAllDeveloper();
+
+        for (Developer v: listDev) {
+            spinnerArrayDev.add(v.getName());
+        }
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+                ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(this,
+                        spinnerArrayDev, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinnerDev.setAdapter(adapter);*/
 
         SharedPreferences myPreference = getPreferences(MODE_PRIVATE);
         String imageS = myPreference.getString("imagePreference", "");
@@ -104,6 +133,7 @@ public class AddGame extends AppCompatActivity {
 
     private void saveData() {
         String name, description, id_publisher, id_developer;
+        int id_pub, id_dev;
         EditText etName, etDescription;
         Spinner spinnerDev, spinnerPub;
 
@@ -119,7 +149,7 @@ public class AddGame extends AppCompatActivity {
         spinnerPub = findViewById(R.id.spinnerPub);
         id_publisher = spinnerPub.getSelectedItem().toString();
 
-        gameViewModel.insert(new Game(name, description, imgData, 1, 1));
+        gameViewModel.insert(new Game(name, description, imgData, 7, 8));
         Toast.makeText(AddGame.this, "Game saved", Toast.LENGTH_SHORT).show();
         finish();
     }

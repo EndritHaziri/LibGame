@@ -121,8 +121,7 @@ public class AddGame extends AppCompatActivity {
 
         gameViewModel.insert(new Game(name, description, imgData, 1, 1));
         Toast.makeText(AddGame.this, "Game saved", Toast.LENGTH_SHORT).show();
-        /*Intent home = new Intent (AddGame.this, Home.class);
-        AddGame.this.startActivity(home);*/
+        finish();
     }
 
     public void openGallery(View v){

@@ -41,7 +41,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         LibGameRoomDatabase.class, "libGame_database")
-                        //.addCallback(sRoomDatabaseCallback)
+                        .addCallback(sRoomDatabaseCallback)
                         .allowMainThreadQueries()
                         .build();
                 }
@@ -61,6 +61,8 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
+            mDao.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", 1, 1));
+            mDao.insert(new Game("Rocket League", "Le sel est présent", "rl.png", 1, 1));
             return null;
         }
     }

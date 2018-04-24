@@ -30,7 +30,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
                 @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase db){
                     super.onOpen(db);
-                    new PopulateDbAsync(INSTANCE).execute();
+                    //new PopulateDbAsync(INSTANCE).execute();
                 }
             };
 
@@ -63,19 +63,19 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
 
         @Override
         protected Void doInBackground(final Void... params) {
-            gameDao.deleteAll();
-            gameDao.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", 7, 9));
-            gameDao.insert(new Game("Rocket League", "Le sel est présent", "rl.png", 8, 7));
+            //gameDao.deleteAll();
+            //gameDao.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", 1, 2));
+            //gameDao.insert(new Game("Rocket League", "Le sel est présent", "rl.png", 3, 1));
 
-            /*devDao.deleteAll();*/
-            devDao.insert(new Developer("2K Games"));
-            devDao.insert(new Developer("Activision"));
-            devDao.insert(new Developer("Blizzard Entertainment"));
+            //devDao.deleteAll();
+            //devDao.insert(new Developer("2K Games"));
+            //devDao.insert(new Developer("Activision"));
+            //devDao.insert(new Developer("Blizzard Entertainment"));
 
-            /*pubDao.deleteAll();*/
-            pubDao.insert(new Publisher("2K Games"));
-            pubDao.insert(new Publisher("Bethesda Softworks"));
-            pubDao.insert(new Publisher("Capcom"));
+            //pubDao.deleteAll();
+            //pubDao.insert(new Publisher("2K Games"));
+            //pubDao.insert(new Publisher("Bethesda Softworks"));
+            //pubDao.insert(new Publisher("Capcom"));
             return null;
         }
     }

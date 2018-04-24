@@ -33,6 +33,9 @@
         <activity
             android:name=".AddPublisher"
             android:label="@string/title_activity_add_publisher" />
+        <activity
+            android:name=".EditGame"
+            android:label="@string/title_activity_edit_game"></activity>
     </application>
 
 </manifest>

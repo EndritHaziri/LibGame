@@ -24,6 +24,10 @@ public interface GameDao {
     @Query("SELECT * FROM game_table WHERE id = :idGame")
     Game getGameById(int idGame);
 
+    /* ==== UPDATE ==== */
+    @Query("UPDATE game_table SET name = :name, description = :description WHERE id = :id")
+    void update(int id, String name, String description);
+
     /* ==== DELETE ==== */
     @Query("DELETE FROM game_table")
     void deleteAll();

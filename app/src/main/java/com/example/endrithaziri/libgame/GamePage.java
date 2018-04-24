@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -40,9 +41,13 @@ public class GamePage extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_edit:
+                    Intent editGame = new Intent (GamePage.this, EditGame.class);
+                    editGame.putExtra("id", g.getId());
+                    GamePage.this.startActivity(editGame);
                     return true;
 
                 case R.id.navigation_remove:
+                    remove();
                     return true;
             }
             return false;
@@ -73,6 +78,12 @@ public class GamePage extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.game_page_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    public void remove() {
+        gameViewModel.deleteGame(g.getId());
+        Toast.makeText(GamePage.this, "Game deleted", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 }

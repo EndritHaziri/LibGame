@@ -11,6 +11,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import entity.Developer;
@@ -38,6 +40,7 @@ public class AddGame extends AppCompatActivity {
     Button buttonImg;
     Button buttonAddDev;
     Button buttonAddPub;
+    Button buttonEditDev, buttonEditPub;
     BottomNavigationItemView buttonAddGame;
     ImageView image;
     Uri imageUri;
@@ -47,6 +50,9 @@ public class AddGame extends AppCompatActivity {
     private GameViewModel gameViewModel;
     private DeveloperViewModel developerViewModel;
     private PublisherViewModel publisherViewModel;
+    Spinner spinnerDev, spinnerPub;
+    List<String> publishersName = new ArrayList<>();
+    List<String> developersName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +63,38 @@ public class AddGame extends AppCompatActivity {
         developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
         publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
 
+        publishers = publisherViewModel.getAllPublisher();
+        developers = developerViewModel.getAllDeveloper();
+
+        for (Publisher p: publishers
+             ) {
+            publishersName.add(p.getName());
+        }
+
+        for (Developer d: developers
+                ) {
+            developersName.add(d.getName());
+        }
+
+        spinnerDev = findViewById(R.id.spinnerDev);
+
+        ArrayAdapter aaDev = new ArrayAdapter(this,android.R.layout.simple_spinner_item, developersName);
+        aaDev.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+        spinnerDev.setAdapter(aaDev);
+
+        spinnerPub = findViewById(R.id.spinnerPub);
+        ArrayAdapter aaPub = new ArrayAdapter(this,android.R.layout.simple_spinner_item, publishersName);
+
+        aaPub.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+        spinnerPub.setAdapter(aaPub);
+
         buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
         buttonAddDev = (Button) findViewById(R.id.buttonAddDev);
         buttonAddPub = (Button) findViewById(R.id.buttonAddPub);
+        buttonEditDev = (Button) findViewById(R.id.buttonEditDev);
+        buttonEditPub = (Button) findViewById(R.id.buttonEditPub);
         buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
         image = (ImageView) findViewById(R.id.imageViewAddGame);
 
@@ -107,12 +142,20 @@ public class AddGame extends AppCompatActivity {
             }
         });
 
+        buttonEditDev.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent editDev = new Intent (AddGame.this, EditDeveloper.class);
+                editDev.putExtra("id", developerViewModel.getIdDev(spinnerDev.getSelectedItem().toString()));
+                AddGame.this.startActivity(editDev);
+            }
+        });
+
     }
 
     private void saveData() {
         String name, description, id_publisher, id_developer;
         EditText etName, etDescription;
-        Spinner spinnerDev, spinnerPub;
 
         etName = findViewById(R.id.addGameTitle);
         name = etName.getText().toString();
@@ -126,8 +169,7 @@ public class AddGame extends AppCompatActivity {
         spinnerPub = findViewById(R.id.spinnerPub);
         id_publisher = spinnerPub.getSelectedItem().toString();
 
-        gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev("2K Games"), publisherViewModel.getPubId("Capcom")));
-        //gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
+        gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
         Toast.makeText(AddGame.this, "Game saved", Toast.LENGTH_SHORT).show();
         finish();
     }

@@ -90,17 +90,23 @@ public class Home extends AppCompatActivity {
             ImageButton button = new ImageButton(this);
             Bitmap bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
             //button.setImageBitmap(bitmap);
+
             Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-            /*try {
+            try {
                 stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             Bitmap realImage = BitmapFactory.decodeStream(stream);
-            Drawable drawable = new BitmapDrawable(getResources(), stream);*/
+
+
             button.setImageDrawable(drawable);
 
             //button.setImageResource(R.drawable.skyrim);
+
+            button.setImageDrawable(drawable);
+
             button.setLayoutParams(params);
             button.setAdjustViewBounds(true);
             button.setOnClickListener(new View.OnClickListener(){

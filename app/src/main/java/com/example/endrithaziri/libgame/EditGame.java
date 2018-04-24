@@ -1,37 +1,39 @@
 package com.example.endrithaziri.libgame;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import entity.Developer;
-import view_model.DeveloperViewModel;
+import entity.Game;
+import view_model.GameViewModel;
 
-public class AddDeveloper extends AppCompatActivity {
+public class EditGame extends AppCompatActivity {
 
     /**
      * VARIABLE DECLARATION
      */
-    private String name;
-    private DeveloperViewModel devViewModel;
-    private EditText etName;
+    private Game g;
+    private int id;
+    private TextView description, title;
+    private GameViewModel gameViewModel;
+    private String newTitle, newDescription;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_add:
-                    add();
+                case R.id.navigation_ok:
+                    update();
+                    return true;
                 case R.id.navigation_cancel:
                     finish();
+                    return true;
             }
             return false;
         }
@@ -44,13 +46,26 @@ public class AddDeveloper extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_developer);
+        setContentView(R.layout.activity_edit_game);
 
         /**
          *  PREPARE VARIABLES
          */
-        devViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
-        etName = findViewById(R.id.editTextDevelopper);
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        title = findViewById(R.id.etEditTitle);
+        description = findViewById(R.id.etEditDescription);
+
+        /**
+         * GET THE GAME
+         */
+        id = getIntent().getIntExtra("id", 0);
+        g = gameViewModel.getGameById(id);
+
+        /**
+         * SET DATA IN CORRESPONDING FIELDS
+         */
+        title.setText(g.getName());
+        description.setText(g.getDescription());
 
         /**
          * NAVIGATION BAR
@@ -60,23 +75,24 @@ public class AddDeveloper extends AppCompatActivity {
     }
 
     /**
-     * METHOD TO ADD A NEW DEVELOPER
+     * METHOD TO UPDATE THE CURRENT GAME
      */
-    protected void add() {
+    public void update() {
         /**
          * GET THE NEW TEXT
          */
-        name = etName.getText().toString();
+        newTitle = title.getText().toString();
+        newDescription = description.getText().toString();
 
         /**
-         * INSERT A NEW DEVELOPER
+         * UPDATE THE GAME
          */
-        devViewModel.insert(new Developer(name));
+        gameViewModel.update(g.getId(), newTitle, newDescription);
 
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(AddDeveloper.this, "Developer saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditGame.this, "Game edited", Toast.LENGTH_SHORT).show();
         finish();
     }
 

@@ -34,12 +34,20 @@ public class DeveloperRepository {
         return devDao.getDevById(id);
     }
 
+    public int getIdDev(String name) {
+        return devDao.getIdDev(name);
+    }
+
     public void deleteDeveloper(int id) {
         devDao.deleteDeveloper(id);
     }
 
     public void insert(Developer developer) {
         new insertAsyncTask(devDao).execute(developer);
+    }
+
+    public void update(int id, String name) {
+        devDao.update(id, name);
     }
 
     public static class insertAsyncTask extends AsyncTask<Developer, Void, Void> {
@@ -52,6 +60,7 @@ public class DeveloperRepository {
 
         @Override
         protected Void doInBackground(Developer... developers) {
+            mAsyncTaskDao.insert(developers[0]);
             return null;
         }
     }

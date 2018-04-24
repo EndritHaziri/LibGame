@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.endrithaziri.libgame">
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
 
     <application
         android:allowBackup="true"
@@ -33,6 +34,12 @@
         <activity
             android:name=".AddPublisher"
             android:label="@string/title_activity_add_publisher" />
+        <activity
+            android:name=".EditGame"
+            android:label="@string/title_activity_edit_game" />
+        <activity
+            android:name=".EditDeveloper"
+            android:label= "@string/title_activity_edit_developer"></activity>
     </application>
 
 </manifest>

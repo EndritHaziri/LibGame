@@ -25,6 +25,9 @@ public interface PubDao {
     @Query("SELECT * FROM pub_table WHERE id = :idPub")
     Publisher getPubById(int idPub);
 
+    @Query("SELECT id FROM pub_table WHERE name = :name")
+    int getPubId(String name);
+
     /* ==== DELETE ==== */
     @Query("DELETE FROM pub_table")
     void deleteAll();

@@ -32,6 +32,10 @@ public class PublisherRepository {
         return pubDao.getPubById(id);
     }
 
+    public int getPubId (String name) {
+        return pubDao.getPubId(name);
+    }
+
     public void deletePublisher(int id) {
         pubDao.deletePublisher(id);
     }
@@ -50,6 +54,7 @@ public class PublisherRepository {
 
         @Override
         protected Void doInBackground(Publisher... publishers) {
+            mAsyncTaskDao.insert(publishers[0]);
             return null;
         }
     }

@@ -38,6 +38,10 @@ public class Home extends AppCompatActivity {
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     private InputStream stream;
+    private ImageButton button;
+    private Bitmap bitmap;
+    private Drawable drawable;
+    private Intent gamePage;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -68,6 +72,9 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        /**
+         *  PREPARE VARIABLES
+         */
         linearLayout = findViewById(R.id.linearHomeLayout);
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
@@ -95,12 +102,11 @@ public class Home extends AppCompatActivity {
      */
     protected void buildUI(List<Game> games) {
         for (final Game g : games) {
-            ImageButton button = new ImageButton(this);
-            Bitmap bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
-            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+            button = new ImageButton(this);
+            bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
+            drawable = new BitmapDrawable(getResources(), bitmap);
             try {
                 stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -110,7 +116,7 @@ public class Home extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    Intent gamePage = new Intent (Home.this, GamePage.class);
+                    gamePage = new Intent (Home.this, GamePage.class);
                     gamePage.putExtra("id", g.getId());
                     Home.this.startActivity(gamePage);
                 }

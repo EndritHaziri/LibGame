@@ -56,6 +56,7 @@ public class DeveloperRepository {
 
         @Override
         protected Void doInBackground(Developer... developers) {
+            mAsyncTaskDao.insert(developers[0]);
             return null;
         }
     }

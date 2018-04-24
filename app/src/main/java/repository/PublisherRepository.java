@@ -54,6 +54,7 @@ public class PublisherRepository {
 
         @Override
         protected Void doInBackground(Publisher... publishers) {
+            mAsyncTaskDao.insert(publishers[0]);
             return null;
         }
     }

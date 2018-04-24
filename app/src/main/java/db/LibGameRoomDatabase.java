@@ -30,7 +30,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
                 @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase db){
                     super.onOpen(db);
-                    //new PopulateDbAsync(INSTANCE).execute();
+                    new PopulateDbAsync(INSTANCE).execute();
                 }
             };
 
@@ -40,7 +40,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         LibGameRoomDatabase.class, "libGame_database")
-                        .addCallback(sRoomDatabaseCallback)
+                        //.addCallback(sRoomDatabaseCallback)
                         .allowMainThreadQueries()
                         .build();
                 }
@@ -63,7 +63,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
 
         @Override
         protected Void doInBackground(final Void... params) {
-            devDao.deleteAll();
+            /*devDao.deleteAll();
             devDao.insert(new Developer("2K Games"));
             devDao.insert(new Developer("Activision"));
             devDao.insert(new Developer("Blizzard Entertainment"));
@@ -71,7 +71,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
             pubDao.deleteAll();
             pubDao.insert(new Publisher("2K Games"));
             pubDao.insert(new Publisher("Bethesda Softworks"));
-            pubDao.insert(new Publisher("Capcom"));
+            pubDao.insert(new Publisher("Capcom"));*/
 
             gameDao.deleteAll();
             gameDao.insert(new Game("Pokemon", "Attrapez les tous", "pokemon.png", devDao.getIdDev("Activision"), pubDao.getPubId("2K Games")));

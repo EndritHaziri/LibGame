@@ -63,7 +63,8 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
 
         @Override
         protected Void doInBackground(final Void... params) {
-            /*devDao.deleteAll();
+
+            /*pubDao.deleteAll();
             devDao.insert(new Developer("2K Games"));
             devDao.insert(new Developer("Activision"));
             devDao.insert(new Developer("Blizzard Entertainment"));

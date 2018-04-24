@@ -7,19 +7,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -99,14 +95,14 @@ public class AddGame extends AppCompatActivity {
         buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
         image = (ImageView) findViewById(R.id.imageViewAddGame);
 
-        SharedPreferences myPreference = getPreferences(MODE_PRIVATE);
+      /*  SharedPreferences myPreference = getPreferences(MODE_PRIVATE);
         String imageS = myPreference.getString("imagePreference", "");
         Bitmap imageB;
         if(!imageS.equals("")) {
             imageB = decodeToBase64(imageS);
             image.setImageBitmap(imageB);
         }
-
+*/
         /* ==== ADD LISTENERS ==== */
 
         // Listener button image
@@ -211,15 +207,15 @@ public class AddGame extends AppCompatActivity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+       String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
         //Log.d("Image Log:", imageEncoded);
         return imageEncoded;
     }
 
     public static Bitmap decodeToBase64(String input) {
-        byte[] decodedByte = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+       byte[] decodedByte = Base64.decode(input, 0);
+       return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
 

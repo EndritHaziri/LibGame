@@ -2,6 +2,10 @@ package com.example.endrithaziri.libgame;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import entity.Game;
@@ -24,6 +30,10 @@ public class Home extends AppCompatActivity {
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
     MenuItem item ;
+    private Bitmap image;
+
+    InputStream stream;
+    Intent data;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,6 +55,9 @@ public class Home extends AppCompatActivity {
         }
     };
 
+    //Convert bitmap to drawable
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,6 +77,15 @@ public class Home extends AppCompatActivity {
             ImageButton button = new ImageButton(this);
             //Bitmap bitmap = decodeToBase64(g.getUrl_image().trim());
             //button.setImageBitmap(bitmap);
+            //Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+            try {
+                stream = getContentResolver().openInputStream(data.getData());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap realImage = BitmapFactory.decodeStream(stream);
+            Drawable drawable = new BitmapDrawable(getResources(), stream);
+            button.setImageDrawable(drawable);
             button.setImageResource(R.drawable.skyrim);
             button.setLayoutParams(params);
             button.setAdjustViewBounds(true);

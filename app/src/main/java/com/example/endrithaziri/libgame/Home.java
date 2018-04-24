@@ -1,11 +1,15 @@
 package com.example.endrithaziri.libgame;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,6 +26,8 @@ import java.util.List;
 
 import entity.Game;
 import view_model.GameViewModel;
+
+import static com.example.endrithaziri.libgame.AddGame.decodeToBase64;
 
 public class Home extends AppCompatActivity {
 
@@ -68,25 +74,33 @@ public class Home extends AppCompatActivity {
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         List<Game> games = gameViewModel.getAllGames();
         int cpt = games.size();
         System.out.println("nbr of games : " + cpt);
-        
+
         for (final Game g : games) {
             System.out.println(g.getName());
             ImageButton button = new ImageButton(this);
-            //Bitmap bitmap = decodeToBase64(g.getUrl_image().trim());
+            Bitmap bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
             //button.setImageBitmap(bitmap);
-            //Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-            try {
-                stream = getContentResolver().openInputStream(data.getData());
+            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+            /*try {
+                stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             Bitmap realImage = BitmapFactory.decodeStream(stream);
-            Drawable drawable = new BitmapDrawable(getResources(), stream);
+            Drawable drawable = new BitmapDrawable(getResources(), stream);*/
             button.setImageDrawable(drawable);
-            button.setImageResource(R.drawable.skyrim);
+
+            //button.setImageResource(R.drawable.skyrim);
             button.setLayoutParams(params);
             button.setAdjustViewBounds(true);
             button.setOnClickListener(new View.OnClickListener(){

@@ -153,14 +153,14 @@ public class AddGame extends AppCompatActivity {
                 stream = getContentResolver().openInputStream(data.getData());
                 Bitmap realImage = BitmapFactory.decodeStream(stream);
                 image.setImageBitmap(realImage);
-                imgData = encodeToBase64(realImage);
+                //imgData = encodeToBase64(realImage);
 
                 /*SharedPreferences myPrefrence = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefrence.edit();
                 editor.putString("imagePreferance", encodeToBase64(realImage));
+                editor.commit();*/
                 imgData = encodeToBase64(realImage);
 
-                editor.commit();*/
             }
             catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block

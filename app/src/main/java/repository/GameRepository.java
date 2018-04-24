@@ -33,6 +33,14 @@ public class GameRepository {
         new insertAsyncTask(gameDao).execute(game);
     }
 
+    public void update(int id, String name, String description) {
+        gameDao.update(id, name, description);
+    }
+
+    public void deleteGame(int id) {
+        gameDao.deleteGame(id);
+    }
+
     private static class insertAsyncTask extends AsyncTask<Game, Void, Void> {
 
         private GameDao mAsyncTaskDao;

@@ -34,4 +34,12 @@ public class GameViewModel extends AndroidViewModel {
     public void insert(Game game) {
         gameRepository.insert(game);
     }
+
+    public void update(int id, String name, String description) {
+        gameRepository.update(id, name, description);
+    }
+
+    public void deleteGame(int id) {
+        gameRepository.deleteGame(id);
+    }
 }

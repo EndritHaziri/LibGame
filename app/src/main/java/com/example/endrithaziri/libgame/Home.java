@@ -94,6 +94,7 @@ public class Home extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent gamePage = new Intent (Home.this, GamePage.class);
                     gamePage.putExtra("id", g.getId());
+                    System.out.println("==========================" + g.getId() + "=============================");
                     Home.this.startActivity(gamePage);
                 }
             });

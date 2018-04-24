@@ -21,9 +21,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
+import entity.Developer;
 import entity.Game;
+import entity.Publisher;
+import view_model.DeveloperViewModel;
 import view_model.GameViewModel;
+import view_model.PublisherViewModel;
 
 public class AddGame extends AppCompatActivity {
 
@@ -37,7 +42,11 @@ public class AddGame extends AppCompatActivity {
     ImageView image;
     Uri imageUri;
     String imgData;
+    List<Publisher> publishers;
+    List<Developer> developers;
     private GameViewModel gameViewModel;
+    private DeveloperViewModel developerViewModel;
+    private PublisherViewModel publisherViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,8 @@ public class AddGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_game);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
 
         buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
         buttonAddDev = (Button) findViewById(R.id.buttonAddDev);
@@ -115,7 +126,8 @@ public class AddGame extends AppCompatActivity {
         spinnerPub = findViewById(R.id.spinnerPub);
         id_publisher = spinnerPub.getSelectedItem().toString();
 
-        gameViewModel.insert(new Game(name, description, imgData, 1, 1));
+        gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev("2K Games"), publisherViewModel.getPubId("Capcom")));
+        //gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
         Toast.makeText(AddGame.this, "Game saved", Toast.LENGTH_SHORT).show();
         finish();
     }

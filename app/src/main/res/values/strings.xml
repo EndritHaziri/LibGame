@@ -4,6 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_add">Add</string>
+    <string name="ok">OK</string>
     <string name="title_edit">Edit</string>
     <string name="title_remove">Remove</string>
     <string name="title_evaluation">Evaluation</string>
@@ -28,4 +29,5 @@
         <item>Activision</item>
         <item>Blizzard</item>
     </string-array>
+    <string name="title_activity_edit_game">Edit Game</string>
 </resources>

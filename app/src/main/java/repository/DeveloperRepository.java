@@ -46,6 +46,10 @@ public class DeveloperRepository {
         new insertAsyncTask(devDao).execute(developer);
     }
 
+    public void update(int id, String name) {
+        devDao.update(id, name);
+    }
+
     public static class insertAsyncTask extends AsyncTask<Developer, Void, Void> {
 
         private DevDao mAsyncTaskDao;

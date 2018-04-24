@@ -78,14 +78,14 @@ public class Home extends AppCompatActivity {
             //Bitmap bitmap = decodeToBase64(g.getUrl_image().trim());
             //button.setImageBitmap(bitmap);
             //Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-            try {
+            /*try {
                 stream = getContentResolver().openInputStream(data.getData());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             Bitmap realImage = BitmapFactory.decodeStream(stream);
             Drawable drawable = new BitmapDrawable(getResources(), stream);
-            button.setImageDrawable(drawable);
+            button.setImageDrawable(drawable);*/
             button.setImageResource(R.drawable.skyrim);
             button.setLayoutParams(params);
             button.setAdjustViewBounds(true);

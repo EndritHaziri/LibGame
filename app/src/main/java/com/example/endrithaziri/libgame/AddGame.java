@@ -40,6 +40,7 @@ public class AddGame extends AppCompatActivity {
     Button buttonImg;
     Button buttonAddDev;
     Button buttonAddPub;
+    Button buttonEditDev, buttonEditPub;
     BottomNavigationItemView buttonAddGame;
     ImageView image;
     Uri imageUri;
@@ -92,6 +93,8 @@ public class AddGame extends AppCompatActivity {
         buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
         buttonAddDev = (Button) findViewById(R.id.buttonAddDev);
         buttonAddPub = (Button) findViewById(R.id.buttonAddPub);
+        buttonEditDev = (Button) findViewById(R.id.buttonEditDev);
+        buttonEditPub = (Button) findViewById(R.id.buttonEditPub);
         buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
         image = (ImageView) findViewById(R.id.imageViewAddGame);
 
@@ -136,6 +139,15 @@ public class AddGame extends AppCompatActivity {
             public void onClick(View view) {
                 Intent addPub = new Intent (AddGame.this, AddPublisher.class);
                 AddGame.this.startActivity(addPub);
+            }
+        });
+
+        buttonEditDev.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent editDev = new Intent (AddGame.this, EditDeveloper.class);
+                editDev.putExtra("id", developerViewModel.getIdDev(spinnerDev.getSelectedItem().toString()));
+                AddGame.this.startActivity(editDev);
             }
         });
 

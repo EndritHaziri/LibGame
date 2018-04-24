@@ -2,15 +2,22 @@ package com.example.endrithaziri.libgame;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import entity.Game;
@@ -24,7 +31,8 @@ public class GamePage extends AppCompatActivity {
     private int id;
 
     private TextView description, title, publisher, developer;
-    private BitmapDrawable pic;
+    private ImageButton pic;
+    private InputStream stream;
 
     private GameViewModel gameViewModel;
     private DeveloperViewModel developerViewModel;
@@ -66,6 +74,21 @@ public class GamePage extends AppCompatActivity {
         publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
 
         g = gameViewModel.getGameById(id);
+
+        Bitmap bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
+
+        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+        try {
+            stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Bitmap realImage = BitmapFactory.decodeStream(stream);
+
+        pic = findViewById(R.id.imageGame);
+
+        pic.setImageDrawable(drawable);
 
         description = findViewById(R.id.gameDescription);
         description.setText(g.getDescription());

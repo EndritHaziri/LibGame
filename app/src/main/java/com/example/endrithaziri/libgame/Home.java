@@ -93,11 +93,6 @@ public class Home extends AppCompatActivity {
             }
             Bitmap realImage = BitmapFactory.decodeStream(stream);
 
-
-            button.setImageDrawable(drawable);
-
-            //button.setImageResource(R.drawable.skyrim);
-
             button.setImageDrawable(drawable);
 
             button.setLayoutParams(params);

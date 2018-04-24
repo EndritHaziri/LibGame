@@ -34,14 +34,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageGame1"
+            <ImageButton
+                android:id="@+id/imageGame"
                 android:layout_width="match_parent"
-                android:layout_height="@android:dimen/thumbnail_height"
-                android:background="@drawable/hearthstone"
-                android:contentDescription="game_img"
+                android:layout_height="192dp"
                 android:scaleType="fitCenter"
-                android:visibility="visible" />
+                app:srcCompat="@android:drawable/presence_offline" />
 
             <View
                 android:layout_width="match_parent"

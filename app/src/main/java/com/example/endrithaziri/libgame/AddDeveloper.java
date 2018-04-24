@@ -16,8 +16,12 @@ import view_model.DeveloperViewModel;
 
 public class AddDeveloper extends AppCompatActivity {
 
+    /**
+     * VARIABLE DECLARATION
+     */
+    private String name;
     private DeveloperViewModel devViewModel;
-
+    private EditText etName;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -33,22 +37,45 @@ public class AddDeveloper extends AppCompatActivity {
         }
     };
 
+    /**
+     * ON CREATE
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_developer);
 
+        /**
+         *  PREPARE VARIABLES
+         */
         devViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        etName = findViewById(R.id.editTextDevelopper);
 
+        /**
+         * NAVIGATION BAR
+         */
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * METHOD TO ADD A NEW DEVELOPER
+     */
     protected void add() {
-        String name;
-        EditText etName = findViewById(R.id.editTextDevelopper);
+        /**
+         * GET THE NEW TEXT
+         */
         name = etName.getText().toString();
+
+        /**
+         * INSERT A NEW DEVELOPER
+         */
         devViewModel.insert(new Developer(name));
+
+        /**
+         * SHOW INFORMATIONS AND CLOSE
+         */
         Toast.makeText(AddDeveloper.this, "Developer saved", Toast.LENGTH_SHORT).show();
         finish();
     }

@@ -31,16 +31,13 @@ import static com.example.endrithaziri.libgame.AddGame.decodeToBase64;
 
 public class Home extends AppCompatActivity {
 
+    /**
+     * VARIABLE DECLARATION
+     */
     private GameViewModel gameViewModel;
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-    MenuItem item ;
-    private Bitmap image;
-
-    InputStream stream;
-    Intent data;
-
+    private InputStream stream;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -61,29 +58,45 @@ public class Home extends AppCompatActivity {
         }
     };
 
-    //Convert bitmap to drawable
 
-
+    /**
+     * ON CREATE METHOD
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         linearLayout = findViewById(R.id.linearHomeLayout);
-
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
+        /** GET ALL GAMES */
         List<Game> games = gameViewModel.getAllGames();
-        int cpt = games.size();
-        System.out.println("nbr of games : " + cpt);
 
+        /** BUILD UI */
+        buildUI(games);
+    }
+
+    /**
+     * ON RESUME
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    /**
+     * METHOD TO BUILD UI (1 IMAGE BY GAME)
+     * @param games
+     */
+    protected void buildUI(List<Game> games) {
         for (final Game g : games) {
-            System.out.println(g.getName());
             ImageButton button = new ImageButton(this);
             Bitmap bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
-            //button.setImageBitmap(bitmap);
-
             Drawable drawable = new BitmapDrawable(getResources(), bitmap);
             try {
                 stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
@@ -91,10 +104,7 @@ public class Home extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            Bitmap realImage = BitmapFactory.decodeStream(stream);
-
             button.setImageDrawable(drawable);
-
             button.setLayoutParams(params);
             button.setAdjustViewBounds(true);
             button.setOnClickListener(new View.OnClickListener(){
@@ -102,23 +112,11 @@ public class Home extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent gamePage = new Intent (Home.this, GamePage.class);
                     gamePage.putExtra("id", g.getId());
-                    System.out.println("==========================" + g.getId() + "=============================");
                     Home.this.startActivity(gamePage);
                 }
             });
             linearLayout.addView(button);
             linearLayout.addView(new View(this));
         }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 }

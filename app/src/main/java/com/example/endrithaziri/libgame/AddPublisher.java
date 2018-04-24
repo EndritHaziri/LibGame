@@ -15,8 +15,12 @@ import view_model.PublisherViewModel;
 
 public class AddPublisher extends AppCompatActivity {
 
+    /**
+     * VARIABLE DECLARATION
+     */
+    private String name;
     private PublisherViewModel publisherViewModel;
-
+    private EditText etName;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -32,22 +36,45 @@ public class AddPublisher extends AppCompatActivity {
         }
     };
 
+    /**
+     * ON CREATE
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_publisher);
 
+        /**
+         *  PREPARE VARIABLES
+         */
         publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
+        etName = findViewById(R.id.editTextDevelopper);
 
+        /**
+         * NAVIGATION BAR
+         */
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * METHOD TO ADD A NEW PUBLISHER
+     */
     protected void add() {
-        String name;
-        EditText etName = findViewById(R.id.editTextDevelopper);
+        /**
+         * GET THE NEW TEXT
+         */
         name = etName.getText().toString();
+
+        /**
+         * INSERT THE NEW PUBLISHER
+         */
         publisherViewModel.insert(new Publisher(name));
+
+        /**
+         * SHOW INFORMATIONS AND CLOSE
+         */
         Toast.makeText(AddPublisher.this, "Publisher saved", Toast.LENGTH_SHORT).show();
         finish();
     }

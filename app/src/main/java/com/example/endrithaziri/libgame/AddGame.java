@@ -34,97 +34,101 @@ import view_model.PublisherViewModel;
 
 public class AddGame extends AppCompatActivity {
 
+    /**
+     * VARIABLE DECLARATION
+     */
     private static final int PICK_IMAGE_REQUEST = 100;
-    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
-
-    Button buttonImg;
-    Button buttonAddDev;
-    Button buttonAddPub;
-    Button buttonEditDev, buttonEditPub;
-    BottomNavigationItemView buttonAddGame;
-    ImageView image;
-    Uri imageUri;
-    String imgData;
-    List<Publisher> publishers;
-    List<Developer> developers;
+    private Button buttonImg;
+    private Button buttonAddDev;
+    private Button buttonAddPub;
+    private Button buttonEditDev, buttonEditPub;
+    private BottomNavigationItemView buttonAddGame;
+    private ImageView image;
+    private String imgData;
+    private String name, description, id_publisher, id_developer;
+    private List<Publisher> publishers;
+    private List<Developer> developers;
     private GameViewModel gameViewModel;
     private DeveloperViewModel developerViewModel;
     private PublisherViewModel publisherViewModel;
-    Spinner spinnerDev, spinnerPub;
-    List<String> publishersName = new ArrayList<>();
-    List<String> developersName = new ArrayList<>();
+    private Spinner spinnerDev, spinnerPub;
+    private List<String> publishersName = new ArrayList<>();
+    private List<String> developersName = new ArrayList<>();
+    private ArrayAdapter aaDev, aaPub;
+    private EditText etName, etDescription;
+    private InputStream stream;
+    private Bitmap realImage;
 
+    /**
+     * ON CREATE
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
 
+        /**
+         *  PREPARE VARIABLES
+         */
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
         publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
+        spinnerDev = findViewById(R.id.spinnerDev);
+        spinnerPub = findViewById(R.id.spinnerPub);
+        buttonImg = findViewById(R.id.buttonAddImageGame);
+        buttonAddDev = findViewById(R.id.buttonAddDev);
+        buttonAddPub = findViewById(R.id.buttonAddPub);
+        buttonEditDev = findViewById(R.id.buttonEditDev);
+        buttonEditPub = findViewById(R.id.buttonEditPub);
+        buttonAddGame = findViewById(R.id.navigation_add);
+        image = findViewById(R.id.imageViewAddGame);
+        etName = findViewById(R.id.addGameTitle);
+        etDescription = findViewById(R.id.addGameDescription);
+        spinnerDev = findViewById(R.id.spinnerDev);
+        spinnerPub = findViewById(R.id.spinnerPub);
 
+        /**
+         * GET ALL THE PUBLISHER AND DEVELOPER
+         */
         publishers = publisherViewModel.getAllPublisher();
         developers = developerViewModel.getAllDeveloper();
 
-        for (Publisher p: publishers
-             ) {
+        for (Publisher p: publishers)
             publishersName.add(p.getName());
-        }
 
-        for (Developer d: developers
-                ) {
+        for (Developer d: developers)
             developersName.add(d.getName());
-        }
 
-        spinnerDev = findViewById(R.id.spinnerDev);
-
-        ArrayAdapter aaDev = new ArrayAdapter(this,android.R.layout.simple_spinner_item, developersName);
+        /**
+         * SET DATA IN CORRESPONDING FIELDS
+         */
+        aaDev = new ArrayAdapter(this,android.R.layout.simple_spinner_item, developersName);
         aaDev.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         spinnerDev.setAdapter(aaDev);
 
-        spinnerPub = findViewById(R.id.spinnerPub);
-        ArrayAdapter aaPub = new ArrayAdapter(this,android.R.layout.simple_spinner_item, publishersName);
 
+        aaPub = new ArrayAdapter(this,android.R.layout.simple_spinner_item, publishersName);
         aaPub.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         spinnerPub.setAdapter(aaPub);
 
-        buttonImg = (Button) findViewById(R.id.buttonAddImageGame);
-        buttonAddDev = (Button) findViewById(R.id.buttonAddDev);
-        buttonAddPub = (Button) findViewById(R.id.buttonAddPub);
-        buttonEditDev = (Button) findViewById(R.id.buttonEditDev);
-        buttonEditPub = (Button) findViewById(R.id.buttonEditPub);
-        buttonAddGame = (BottomNavigationItemView) findViewById(R.id.navigation_add);
-        image = (ImageView) findViewById(R.id.imageViewAddGame);
-
-      /*  SharedPreferences myPreference = getPreferences(MODE_PRIVATE);
-        String imageS = myPreference.getString("imagePreference", "");
-        Bitmap imageB;
-        if(!imageS.equals("")) {
-            imageB = decodeToBase64(imageS);
-            image.setImageBitmap(imageB);
-        }
-*/
-        /* ==== ADD LISTENERS ==== */
-
-        // Listener button image
+        /**
+         * ADD BUTTON LISTENER
+         */
         buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery(view);
             }
         });
-
-        // Listener menu button add
         buttonAddGame.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 saveData();
             }
         });
-
-        // Listener button add developer
         buttonAddDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,8 +136,6 @@ public class AddGame extends AppCompatActivity {
                 AddGame.this.startActivity(addDev);
             }
         });
-
-        // Listener button add publisher
         buttonAddPub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +143,6 @@ public class AddGame extends AppCompatActivity {
                 AddGame.this.startActivity(addPub);
             }
         });
-
         buttonEditDev.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -150,59 +151,60 @@ public class AddGame extends AppCompatActivity {
                 AddGame.this.startActivity(editDev);
             }
         });
-
     }
 
+    /**
+     * METHOD TO SAVE A NEW GAME
+     */
     private void saveData() {
-        String name, description, id_publisher, id_developer;
-        EditText etName, etDescription;
-
-        etName = findViewById(R.id.addGameTitle);
+        /**
+         * GET THE NEW TEXT
+         */
         name = etName.getText().toString();
-
-        etDescription = findViewById(R.id.addGameDescription);
         description = etDescription.getText().toString();
-
-        spinnerDev = findViewById(R.id.spinnerDev);
         id_developer = spinnerDev.getSelectedItem().toString();
-
-        spinnerPub = findViewById(R.id.spinnerPub);
         id_publisher = spinnerPub.getSelectedItem().toString();
 
+        /**
+         * INSERT THE NEW GAME
+         */
         gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
+
+        /**
+         * SHOW INFORMATIONS AND CLOSE
+         */
         Toast.makeText(AddGame.this, "Game saved", Toast.LENGTH_SHORT).show();
         finish();
     }
 
+    /**
+     * METHOD TO OPEN THE GALLERY TO CHOOSE AN IMAGE
+     * @param v
+     */
     public void openGallery(View v){
         Intent intent = new Intent();
-        // Show only images, no videos or anything else
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        // Always show the chooser (if there are multiple options available)
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+    /**
+     * METHOD GET THE SELECTED IMAGE
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            InputStream stream;
             try {
                 Toast.makeText(AddGame.this, "Image saved", Toast.LENGTH_SHORT).show();
                 stream = getContentResolver().openInputStream(data.getData());
-                Bitmap realImage = BitmapFactory.decodeStream(stream);
+                realImage = BitmapFactory.decodeStream(stream);
                 image.setImageBitmap(realImage);
-                //imgData = encodeToBase64(realImage);
-
-                /*SharedPreferences myPrefrence = getPreferences(MODE_PRIVATE);
-                SharedPreferences.Editor editor = myPrefrence.edit();
-                editor.putString("imagePreferance", encodeToBase64(realImage));
-                editor.commit();*/
                 imgData = encodeToBase64(realImage);
-
             }
             catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
@@ -214,17 +216,25 @@ public class AddGame extends AppCompatActivity {
         }
     }
 
+    /**
+     * METHOD TO ENCODE THE SELECTED IMAGE
+     * @param image
+     * @return
+     */
     public static String encodeToBase64(Bitmap image) {
         Bitmap immage = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
-       String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-
-        //Log.d("Image Log:", imageEncoded);
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
         return imageEncoded;
     }
 
+    /**
+     * METHOD TO DECODE THE INPUT STRING TO AN IMAGE
+     * @param input
+     * @return
+     */
     public static Bitmap decodeToBase64(String input) {
        byte[] decodedByte = Base64.decode(input, 0);
        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);

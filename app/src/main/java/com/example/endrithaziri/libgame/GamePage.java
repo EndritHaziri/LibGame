@@ -27,17 +27,19 @@ import view_model.PublisherViewModel;
 
 public class GamePage extends AppCompatActivity {
 
+    /**
+     * VARIABLE DECLARATION
+     */
     private Game g;
     private int id;
-
     private TextView description, title, publisher, developer;
     private ImageButton pic;
+    private Bitmap bitmap;
+    private Drawable drawable;
     private InputStream stream;
-
     private GameViewModel gameViewModel;
     private DeveloperViewModel developerViewModel;
     private PublisherViewModel publisherViewModel;
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -62,49 +64,69 @@ public class GamePage extends AppCompatActivity {
         }
     };
 
+    /**
+     * ON CREATE METHOD
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamepage);
 
-        id = getIntent().getIntExtra("id", 0);
-
+        /**
+         *  PREPARE VARIABLES
+         */
+        pic = findViewById(R.id.imageGame);
+        description = findViewById(R.id.gameDescription);
+        developer = findViewById(R.id.gamedevelopper);
+        publisher = findViewById(R.id.gamePublisher);
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
         publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
 
+        /** GET THE GAME BY ID */
+        id = getIntent().getIntExtra("id", 0);
         g = gameViewModel.getGameById(id);
 
-        Bitmap bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
+        /**
+         *  GET AND DECODE THE PICTURE OF THE GAME
+         */
+        bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
+        drawable = new BitmapDrawable(getResources(), bitmap);
 
-        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
         try {
             stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Bitmap realImage = BitmapFactory.decodeStream(stream);
 
-        pic = findViewById(R.id.imageGame);
-
+        /**
+         * SET DATA IN CORRESPONDING FIELDS
+         */
         pic.setImageDrawable(drawable);
-
-        description = findViewById(R.id.gameDescription);
         description.setText(g.getDescription());
-
-        developer = findViewById(R.id.gamedevelopper);
         developer.setText(developerViewModel.getDevById(g.getDeveloper_id()).getName());
-
-        publisher = findViewById(R.id.gamePublisher);
         publisher.setText(publisherViewModel.getPubById(g.getPublisher_id()).getName());
 
+        /**
+         * NAVIGATION BAR
+         */
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.game_page_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * METHOD TO REMOVE THE GAME
+     */
     public void remove() {
+        /**
+         * DELETE THE GAME
+         */
         gameViewModel.deleteGame(g.getId());
+
+        /**
+         * SHOW INFORMATIONS AND CLOSE
+         */
         Toast.makeText(GamePage.this, "Game deleted", Toast.LENGTH_SHORT).show();
         finish();
     }

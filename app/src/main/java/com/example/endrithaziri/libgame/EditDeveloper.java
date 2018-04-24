@@ -15,12 +15,14 @@ import view_model.GameViewModel;
 
 public class EditDeveloper extends AppCompatActivity {
 
+    /**
+     * VARIABLE DECLARATION
+     */
     private Developer dev;
     private int id;
+    private String newName;
     private TextView name;
-
     private DeveloperViewModel developerViewModel;
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -38,28 +40,56 @@ public class EditDeveloper extends AppCompatActivity {
         }
     };
 
+    /**
+     * ON CREATE
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_developer);
 
+        /**
+         *  PREPARE VARIABLES
+         */
         developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        name = findViewById(R.id.editTextDev);
+
+        /**
+         * GET DEVELOPER
+         */
         id = getIntent().getIntExtra("id", 0);
         dev = developerViewModel.getDevById(id);
 
-        name = findViewById(R.id.editTextDev);
+        /**
+         * SET DATA IN CORRESPONDING FIELDS
+         */
         name.setText(dev.getName());
 
+        /**
+         * NAVIGATION BAR
+         */
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * METHOD TO UPDATE THE CURRENT DEVELOPER
+     */
     public void update() {
-        String newName;
+        /**
+         * GET THE NEW TEXT
+         */
         newName = name.getText().toString();
 
+        /**
+         * UPDATE THE DEVELOPER
+         */
         developerViewModel.update(dev.getId(), newName);
 
+        /**
+         * SHOW INFORMATIONS AND CLOSE
+         */
         Toast.makeText(EditDeveloper.this, "Developer edited", Toast.LENGTH_SHORT).show();
         finish();
     }

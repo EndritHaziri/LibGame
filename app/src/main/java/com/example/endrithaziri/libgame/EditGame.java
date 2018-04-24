@@ -14,13 +14,14 @@ import view_model.GameViewModel;
 
 public class EditGame extends AppCompatActivity {
 
+    /**
+     * VARIABLE DECLARATION
+     */
     private Game g;
     private int id;
-
     private TextView description, title;
-
     private GameViewModel gameViewModel;
-
+    private String newTitle, newDescription;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -38,31 +39,59 @@ public class EditGame extends AppCompatActivity {
         }
     };
 
+    /**
+     * ON CREATE
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_game);
 
-        id = getIntent().getIntExtra("id", 0);
+        /**
+         *  PREPARE VARIABLES
+         */
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        title = findViewById(R.id.etEditTitle);
+        description = findViewById(R.id.etEditDescription);
+
+        /**
+         * GET THE GAME
+         */
+        id = getIntent().getIntExtra("id", 0);
         g = gameViewModel.getGameById(id);
 
-        title = findViewById(R.id.etEditTitle);
+        /**
+         * SET DATA IN CORRESPONDING FIELDS
+         */
         title.setText(g.getName());
-        description = findViewById(R.id.etEditDescription);
         description.setText(g.getDescription());
 
+        /**
+         * NAVIGATION BAR
+         */
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * METHOD TO UPDATE THE CURRENT GAME
+     */
     public void update() {
-        String newTitle, newDescription;
+        /**
+         * GET THE NEW TEXT
+         */
         newTitle = title.getText().toString();
         newDescription = description.getText().toString();
 
+        /**
+         * UPDATE THE GAME
+         */
         gameViewModel.update(g.getId(), newTitle, newDescription);
 
+        /**
+         * SHOW INFORMATIONS AND CLOSE
+         */
         Toast.makeText(EditGame.this, "Game edited", Toast.LENGTH_SHORT).show();
         finish();
     }

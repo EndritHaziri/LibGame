@@ -74,13 +74,6 @@ public class Home extends AppCompatActivity {
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
         List<Game> games = gameViewModel.getAllGames();
         int cpt = games.size();
         System.out.println("nbr of games : " + cpt);
@@ -121,6 +114,14 @@ public class Home extends AppCompatActivity {
             linearLayout.addView(button);
             linearLayout.addView(new View(this));
         }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

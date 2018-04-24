@@ -32,6 +32,10 @@ public class PublisherRepository {
         return pubDao.getPubById(id);
     }
 
+    public int getPubId (String name) {
+        return pubDao.getPubId(name);
+    }
+
     public void deletePublisher(int id) {
         pubDao.deletePublisher(id);
     }

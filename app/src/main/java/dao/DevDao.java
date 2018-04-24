@@ -25,6 +25,9 @@ public interface DevDao {
     @Query("SELECT * FROM dev_table WHERE id = :idDev")
     Developer getDevById(int idDev);
 
+    @Query("SELECT id FROM dev_table WHERE name = :name")
+    int getIdDev(String name);
+
     /* ==== DELETE ==== */
     @Query("DELETE FROM dev_table")
     void deleteAll();

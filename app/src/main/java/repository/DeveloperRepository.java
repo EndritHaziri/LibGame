@@ -34,6 +34,10 @@ public class DeveloperRepository {
         return devDao.getDevById(id);
     }
 
+    public int getIdDev(String name) {
+        return devDao.getIdDev(name);
+    }
+
     public void deleteDeveloper(int id) {
         devDao.deleteDeveloper(id);
     }

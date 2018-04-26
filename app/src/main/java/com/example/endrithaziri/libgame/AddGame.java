@@ -59,10 +59,6 @@ public class AddGame extends AppCompatActivity {
     private InputStream stream;
     private Bitmap realImage;
 
-
-
-
-
     /**
      * ON CREATE
      * @param savedInstanceState
@@ -164,6 +160,7 @@ public class AddGame extends AppCompatActivity {
             }
         });
     }
+
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 

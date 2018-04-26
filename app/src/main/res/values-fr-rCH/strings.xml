@@ -26,4 +26,8 @@
     <string name="title_activity_edit_developer">Editer un développeur</string>
     <string name="title_activity_edit_publisher">Editer un éditeur</string>
     <string name="title_activity_settings">Configuration</string>
+    <string name="title_activity_about">A propos</string>
+    <string name="Dodskamp">Coluccia Mickael</string>
+    <string name="Amaterasu">Haziri Endrit</string>
+    <string name="aboutDescription">Dans le contexte du cours Android, nous sommes amener à créer une application qui permet d\'ajouter, de modifier et de supprimer des données dans 3 tables différentes</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.endrithaziri.libgame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -52,8 +53,11 @@ public class Settings extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
+
                         return;
                     case 1:
+                        Intent aboutPage = new Intent (Settings.this,About.class);
+                        Settings.this.startActivity(aboutPage);
                         return;
                 }
             }

@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.Locale;
@@ -19,61 +21,60 @@ import java.util.Locale;
 
 public class ChangeLanguage extends Activity {
 
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+    /**
+     * VARIABLE DECLARATION
+     */
+    private Configuration config = new Configuration();
+    private ListView lang;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-            case R.id.navigation_home:
-                Intent homepage = new Intent (ChangeLanguage.this,Home.class);
-                ChangeLanguage.this.startActivity(homepage);
-                return true;
-        }
-        return false;
-    }
-        /** Called when the activity is first created. */
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_settings);
-
-            Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-            spinner.setPrompt("select language");
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, languages);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
-
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                public void onItemSelected(AdapterView arg0, View arg1,
-                                           int arg2, long arg3) {
-                    Configuration config = new Configuration();
-                    switch (arg2) {
-                        case 0:
-                            config.locale = Locale.ENGLISH;
-                            break;
-                        case 1:
-                            config.locale = Locale.FRENCH;
-                            break;
-                        default:
-                            config.locale = Locale.ENGLISH;
-                            break;
-                    }
-                    getResources().updateConfiguration(config, null);
-                }
-
-                public void onNothingSelected(AdapterView arg0) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    finish();
+                    return true;
+            }
+            return false;
         }
+    };
 
-        public void onClick(View v){
-            startActivity(new Intent(getBaseContext(), Settings.class));
-        }
-        private String[] languages = { "English", "Français"};
+    /**
+     * ON CREATE METHOD
+     * @param savedInstanceState
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_change_language);
+
+        /**
+         *  PREPARE VARIABLES
+         */
+        lang = findViewById(R.id.listViewLang);
+        lang.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item,getResources().getStringArray(R.array.list_lang)));
+        lang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        config.locale = Locale.FRENCH;
+                        break;
+                    case 1:
+                        config.locale = Locale.ENGLISH;
+                        break;
+                }
+            }
+        });
+        getResources().updateConfiguration(config, null);
+
+        /**
+         * NAVIGATION BAR
+         */
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+}
 
 

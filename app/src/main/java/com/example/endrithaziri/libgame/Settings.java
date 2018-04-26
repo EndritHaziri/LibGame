@@ -52,7 +52,8 @@ public class Settings extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        
+                        Intent langPage = new Intent(Settings.this,ChangeLanguage.class);
+                        Settings.this.startActivity(langPage);
                         return;
                     case 1:
                         Intent aboutPage = new Intent (Settings.this,About.class);

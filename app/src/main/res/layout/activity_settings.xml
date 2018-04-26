@@ -32,12 +32,6 @@
             android:entries="@array/list_settings" />
     </android.support.constraint.ConstraintLayout>
 
-    <linearlayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <spinner android:id="@+id/spinner1" android:layout_height="wrap_content" android:layout_width="match_parent">
-
-            <button android:id="@+id/button1" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="Start activity"></button>
-        </spinner>
-    </linearlayout>
 
 </android.support.constraint.ConstraintLayout>

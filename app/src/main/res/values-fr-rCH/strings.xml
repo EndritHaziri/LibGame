@@ -16,7 +16,7 @@
     <string name="title">Titre</string>
     <string name="description">Description</string>
     <string name="chooseImage">Choisir une image</string>
-    <string name="settings">Configurations</string>
+    <string name="settings">Configuration</string>
 
     <string name="title_activity_add_game">Ajouter un jeu</string>
     <string name="title_activity_add_developer">Ajouter un développeur</string>
@@ -25,4 +25,5 @@
     <string name="title_activity_edit_game">Editer un jeu</string>
     <string name="title_activity_edit_developer">Editer un développeur</string>
     <string name="title_activity_edit_publisher">Editer un éditeur</string>
+    <string name="title_activity_settings">Configuration</string>
 </resources>

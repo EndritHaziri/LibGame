@@ -24,4 +24,5 @@
     <string name="title_activity_edit_game">Edit Game</string>
     <string name="title_activity_edit_developer">Edit Developer</string>
     <string name="title_activity_edit_publisher">Edit Publisher</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

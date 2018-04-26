@@ -43,7 +43,10 @@
             android:label="@string/title_activity_edit_developer" />
         <activity
             android:name=".EditPublisher"
-            android:label="@string/title_activity_edit_publisher"></activity>
+            android:label="@string/title_activity_edit_publisher" />
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

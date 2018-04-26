@@ -51,6 +51,12 @@ public class Home extends AppCompatActivity {
                     Intent addgame = new Intent (Home.this,AddGame.class);
                     Home.this.startActivity(addgame);
                     return true;
+
+                case R.id.navigation_settings:
+                    Intent settings = new Intent(Home.this,Settings.class);
+                    Home.this.startActivity(settings);
+                    return true;
+
             }
             return false;
         }

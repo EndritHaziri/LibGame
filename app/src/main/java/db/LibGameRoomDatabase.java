@@ -30,7 +30,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
                 @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase db){
                     super.onOpen(db);
-                    new PopulateDbAsync(INSTANCE).execute();
+                    //new PopulateDbAsync(INSTANCE).execute();
                 }
             };
 
@@ -40,7 +40,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         LibGameRoomDatabase.class, "libGame_database")
-                        //.addCallback(sRoomDatabaseCallback)
+                        .addCallback(sRoomDatabaseCallback)
                         .allowMainThreadQueries()
                         .build();
                 }

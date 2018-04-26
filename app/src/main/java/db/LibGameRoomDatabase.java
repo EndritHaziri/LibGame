@@ -40,7 +40,7 @@ public abstract class LibGameRoomDatabase extends RoomDatabase{
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         LibGameRoomDatabase.class, "libGame_database")
-                        .addCallback(sRoomDatabaseCallback)
+                        //.addCallback(sRoomDatabaseCallback)
                         .allowMainThreadQueries()
                         .build();
                 }

@@ -28,6 +28,10 @@ public interface PubDao {
     @Query("SELECT id FROM pub_table WHERE name = :name")
     int getPubId(String name);
 
+    /* ==== UPDATE ==== */
+    @Query("UPDATE pub_table SET name = :name WHERE id = :id")
+    void update(int id, String name);
+
     /* ==== DELETE ==== */
     @Query("DELETE FROM pub_table")
     void deleteAll();

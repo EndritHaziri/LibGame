@@ -36,6 +36,10 @@ public class PublisherViewModel extends AndroidViewModel {
         return publisherRepository.getPubId(name);
     }
 
+    public void update(int id, String name) {
+        publisherRepository.update(id, name);
+    }
+
     public void deletePublisher(int id) {
         publisherRepository.deletePublisher(id);
     }

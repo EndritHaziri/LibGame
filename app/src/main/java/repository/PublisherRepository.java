@@ -44,6 +44,10 @@ public class PublisherRepository {
         new insertAsyncTask(pubDao).execute(publisher);
     }
 
+    public void update(int id, String name) {
+        pubDao.update(id, name);
+    }
+
     public static class insertAsyncTask extends AsyncTask<Publisher, Void, Void> {
 
         private PubDao mAsyncTaskDao;

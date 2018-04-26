@@ -105,8 +105,18 @@ public class GamePage extends AppCompatActivity {
          */
         pic.setImageDrawable(drawable);
         description.setText(g.getDescription());
-        developer.setText(developerViewModel.getDevById(g.getDeveloper_id()).getName());
-        publisher.setText(publisherViewModel.getPubById(g.getPublisher_id()).getName());
+
+        try {
+            developer.setText(developerViewModel.getDevById(g.getDeveloper_id()).getName());
+        } catch (NullPointerException n) {
+            developer.setText("UNKNOWN DEVELOPER");
+        }
+
+        try {
+            publisher.setText(publisherViewModel.getPubById(g.getPublisher_id()).getName());
+        } catch (NullPointerException n) {
+            publisher.setText("UNKNOWN PUBLISHER");
+        }
 
         /**
          * NAVIGATION BAR

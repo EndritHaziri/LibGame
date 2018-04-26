@@ -1,15 +1,11 @@
 package com.example.endrithaziri.libgame;
 
-import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -26,8 +22,6 @@ import java.util.List;
 
 import entity.Game;
 import view_model.GameViewModel;
-
-import static com.example.endrithaziri.libgame.AddGame.decodeToBase64;
 
 public class Home extends AppCompatActivity {
 
@@ -94,6 +88,9 @@ public class Home extends AppCompatActivity {
         /** BUILD UI */
         buildUI(games);
 
+        /**
+         * NAVIGATION BAR
+         */
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }

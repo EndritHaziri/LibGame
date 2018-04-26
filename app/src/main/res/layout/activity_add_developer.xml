@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/adddev_navigation" />
+        app:menu="@menu/add_dev_navigation" />
 
     <EditText
         android:id="@+id/editTextDevelopper"

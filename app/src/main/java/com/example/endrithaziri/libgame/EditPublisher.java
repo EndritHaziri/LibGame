@@ -9,20 +9,19 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import entity.Developer;
-import view_model.DeveloperViewModel;
-import view_model.GameViewModel;
+import entity.Publisher;
+import view_model.PublisherViewModel;
 
-public class EditDeveloper extends AppCompatActivity {
+public class EditPublisher extends AppCompatActivity {
 
     /**
      * VARIABLE DECLARATION
      */
-    private Developer dev;
+    private Publisher pub;
     private int id;
     private String newName;
     private TextView name;
-    private DeveloperViewModel developerViewModel;
+    private PublisherViewModel publisherViewModel;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -50,24 +49,24 @@ public class EditDeveloper extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_developer);
+        setContentView(R.layout.activity_edit_publisher);
 
         /**
          *  PREPARE VARIABLES
          */
-        developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
-        name = findViewById(R.id.editTextDev);
+        publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
+        name = findViewById(R.id.editTextPub);
 
         /**
-         * GET DEVELOPER
+         * GET PUBLISHER
          */
         id = getIntent().getIntExtra("id", 0);
-        dev = developerViewModel.getDevById(id);
+        pub = publisherViewModel.getPubById(id);
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
-        name.setText(dev.getName());
+        name.setText(pub.getName());
 
         /**
          * NAVIGATION BAR
@@ -77,23 +76,23 @@ public class EditDeveloper extends AppCompatActivity {
     }
 
     /**
-     * METHOD TO UPDATE THE CURRENT DEVELOPER
+     * METHOD TO UPDATE THE CURRENT PUBLISHER
      */
-    public void update() {
+    private void update() {
         /**
          * GET THE NEW TEXT
          */
         newName = name.getText().toString();
 
         /**
-         * UPDATE THE DEVELOPER
+         * UPDATE THE PUBLISHER
          */
-        developerViewModel.update(dev.getId(), newName);
+        publisherViewModel.update(pub.getId(), newName);
 
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(EditDeveloper.this, "Developer edited", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditPublisher.this, "Publisher edited", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -105,12 +104,12 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          * REMOVE THE PUBLISHER
          */
-        developerViewModel.deleteDeveloper(dev.getId());
+        publisherViewModel.deletePublisher(pub.getId());
 
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(EditDeveloper.this, "Developer deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditPublisher.this, "Publisher deleted", Toast.LENGTH_SHORT).show();
         finish();
     }
 

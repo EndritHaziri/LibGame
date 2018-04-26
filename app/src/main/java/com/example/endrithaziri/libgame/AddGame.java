@@ -149,6 +149,14 @@ public class AddGame extends AppCompatActivity {
                 AddGame.this.startActivity(editDev);
             }
         });
+        buttonEditPub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editPub = new Intent(AddGame.this, EditPublisher.class);
+                editPub.putExtra("id", publisherViewModel.getPubId(spinnerPub.getSelectedItem().toString()));
+                AddGame.this.startActivity(editPub);
+            }
+        });
     }
 
     /**

@@ -49,7 +49,7 @@ public class AddPublisher extends AppCompatActivity {
          *  PREPARE VARIABLES
          */
         publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
-        etName = findViewById(R.id.editTextDevelopper);
+        etName = findViewById(R.id.editTextPublisher);
 
         /**
          * NAVIGATION BAR

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LibGame</string>
+    <string name="home">Accueil</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="add">Ajouter</string>
+    <string name="ok">OK</string>
+    <string name="edit">Editer</string>
+    <string name="remove">Supprimer</string>
+    <string name="evaluation">Evaluation</string>
+    <string name="lorem_fill">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nulla neque, varius in diam cursus, cursus ornare est. Maecenas in tempus est, ac sollicitudin lacus. Ut luctus vitae nulla a finibus. Cras tincidunt augue sit amet orci lobortis tincidunt. Aenean at lorem at est ullamcorper dignissim. Praesent dui tellus, laoreet at risus venenatis, tempor viverra massa. Maecenas lorem nisi, ullamcorper sed consectetur et, commodo pulvinar libero. Integer efficitur non purus at eleifend.</string>
+    <string name="cancel">Annuler</string>
+    <string name="publisher">Editeur</string>
+    <string name="developer">Developpeur</string>
+    <string name="title">Titre</string>
+    <string name="description">Description</string>
+    <string name="chooseImage">Choisir une image</string>
+    <string name="settings">Configurations</string>
+
+    <string name="title_activity_add_game">Ajouter un jeu</string>
+    <string name="title_activity_add_developer">Ajouter un développeur</string>
+    <string name="title_activity_add_publisher">Ajouter un éditeur</string>
+    <string name="title_activity_add_evaluation">Ajouter une évaluation</string>
+    <string name="title_activity_edit_game">Editer un jeu</string>
+    <string name="title_activity_edit_developer">Editer un développeur</string>
+    <string name="title_activity_edit_publisher">Editer un éditeur</string>
+</resources>

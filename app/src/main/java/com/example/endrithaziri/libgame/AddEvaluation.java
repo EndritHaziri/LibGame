@@ -18,7 +18,7 @@ public class AddEvaluation extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_add:
-                    mTextMessage.setText(R.string.title_add);
+                    mTextMessage.setText(R.string.add);
                     return true;
             }
             return false;

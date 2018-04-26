@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:ems="10"
-                android:hint="@string/title_description"
+                android:hint="@string/title"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:ems="10"
-                android:hint="@string/add_description"
+                android:hint="@string/description"
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +58,14 @@
                 android:layout_marginBottom="16dp"
                 android:text="@string/chooseImage" />
 
+            <TextView
+                android:id="@+id/textViewDev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/developer"
+                tools:text="@string/developer" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -67,8 +75,7 @@
                     android:id="@+id/spinnerDev"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:entries="@array/dev_list" />
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/buttonAddDev"
@@ -85,6 +92,14 @@
                     android:text="." />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textViewPub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/publisher"
+                tools:text="@string/publisher" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -94,8 +109,7 @@
                     android:id="@+id/spinnerPub"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:entries="@array/dev_list" />
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/buttonAddPub"

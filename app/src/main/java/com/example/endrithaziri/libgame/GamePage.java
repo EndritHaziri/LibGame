@@ -76,6 +76,7 @@ public class GamePage extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
+        title = findViewById(R.id.textViewTitle);
         pic = findViewById(R.id.imageGame);
         description = findViewById(R.id.gameDescription);
         developer = findViewById(R.id.gamedevelopper);
@@ -103,6 +104,7 @@ public class GamePage extends AppCompatActivity {
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
+        title.setText(g.getName());
         pic.setImageDrawable(drawable);
         description.setText(g.getDescription());
 

@@ -79,17 +79,19 @@
 
                 <Button
                     android:id="@+id/buttonAddDev"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="+" />
+                    android:text="@string/add"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
 
                 <Button
                     android:id="@+id/buttonEditDev"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="." />
+                    android:text="@string/edit"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
             </LinearLayout>
 
             <TextView
@@ -113,17 +115,19 @@
 
                 <Button
                     android:id="@+id/buttonAddPub"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="+" />
+                    android:text="@string/add"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
 
                 <Button
                     android:id="@+id/buttonEditPub"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="." />
+                    android:text="@string/edit"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
 
             </LinearLayout>
         </LinearLayout>

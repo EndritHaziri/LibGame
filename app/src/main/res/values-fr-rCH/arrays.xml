@@ -4,4 +4,8 @@
         <item>Changer de langue</item>
         <item>A propos</item>
     </string-array>
+    <string-array name="list_lang">
+        <item>Français</item>
+        <item>Anglais</item>
+    </string-array>
 </resources>

@@ -46,14 +46,13 @@ public class Settings extends AppCompatActivity {
          *  PREPARE VARIABLES
          */
         settings = findViewById(R.id.listViewSettings);
-
         settings.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item,getResources().getStringArray(R.array.list_settings)));
         settings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-
+                        
                         return;
                     case 1:
                         Intent aboutPage = new Intent (Settings.this,About.class);

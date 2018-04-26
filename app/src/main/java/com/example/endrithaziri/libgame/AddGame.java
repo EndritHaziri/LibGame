@@ -2,10 +2,8 @@ package com.example.endrithaziri.libgame;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
@@ -157,6 +155,7 @@ public class AddGame extends AppCompatActivity {
      * METHOD TO SAVE A NEW GAME
      */
     private void saveData() {
+
         /**
          * GET THE NEW TEXT
          */

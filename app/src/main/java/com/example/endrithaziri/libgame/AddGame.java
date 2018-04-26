@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -56,6 +58,10 @@ public class AddGame extends AppCompatActivity {
     private EditText etName, etDescription;
     private InputStream stream;
     private Bitmap realImage;
+
+
+
+
 
     /**
      * ON CREATE
@@ -157,6 +163,16 @@ public class AddGame extends AppCompatActivity {
                 AddGame.this.startActivity(editPub);
             }
         });
+    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.navigation_add:
+                Intent homepage = new Intent (AddGame.this,Home.class);
+                AddGame.this.startActivity(homepage);
+                return true;
+        }
+        return false;
     }
 
     /**

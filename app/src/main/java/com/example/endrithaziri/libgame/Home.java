@@ -77,12 +77,6 @@ public class Home extends AppCompatActivity {
          */
         linearLayout = findViewById(R.id.linearHomeLayout);
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-
-        /** GET ALL GAMES */
-        List<Game> games = gameViewModel.getAllGames();
-
-        /** BUILD UI */
-        buildUI(games);
     }
 
     /**
@@ -91,6 +85,14 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        linearLayout.removeAllViews();
+
+        /** GET ALL GAMES */
+        List<Game> games = gameViewModel.getAllGames();
+
+        /** BUILD UI */
+        buildUI(games);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -118,6 +120,7 @@ public class Home extends AppCompatActivity {
                 public void onClick(View view) {
                     gamePage = new Intent (Home.this, GamePage.class);
                     gamePage.putExtra("id", g.getId());
+                    System.out.println(g.getId());
                     Home.this.startActivity(gamePage);
                 }
             });

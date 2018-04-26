@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,16 @@ import java.util.Locale;
 
 public class ChangeLanguage extends Activity {
 
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.navigation_home:
+                Intent homepage = new Intent (ChangeLanguage.this,Home.class);
+                ChangeLanguage.this.startActivity(homepage);
+                return true;
+        }
+        return false;
+    }
         /** Called when the activity is first created. */
         @Override
         public void onCreate(Bundle savedInstanceState) {

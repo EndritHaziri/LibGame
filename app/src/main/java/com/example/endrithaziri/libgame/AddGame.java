@@ -43,7 +43,7 @@ public class AddGame extends AppCompatActivity {
     private Button buttonAddDev;
     private Button buttonAddPub;
     private Button buttonEditDev, buttonEditPub;
-    private BottomNavigationItemView buttonAddGame;
+    private BottomNavigationItemView buttonAddGame, buttonCancel;
     private ImageView image;
     private String imgData = "";
     private String name, description, id_publisher, id_developer;
@@ -84,6 +84,7 @@ public class AddGame extends AppCompatActivity {
         buttonEditDev = findViewById(R.id.buttonEditDev);
         buttonEditPub = findViewById(R.id.buttonEditPub);
         buttonAddGame = findViewById(R.id.navigation_add);
+        buttonCancel = findViewById(R.id.navigation_cancel);
         image = findViewById(R.id.imageViewAddGame);
         etName = findViewById(R.id.addGameTitle);
         etDescription = findViewById(R.id.addGameDescription);
@@ -132,6 +133,13 @@ public class AddGame extends AppCompatActivity {
                 Intent homepage = new Intent (AddGame.this,Home.class);
                 AddGame.this.startActivity(homepage);
 
+            }
+        });
+        buttonCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent home = new Intent (AddGame.this, Home.class);
+                AddGame.this.startActivity(home);
             }
         });
         buttonAddDev.setOnClickListener(new View.OnClickListener() {

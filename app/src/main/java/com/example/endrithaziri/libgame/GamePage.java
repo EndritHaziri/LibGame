@@ -58,6 +58,8 @@ public class GamePage extends AppCompatActivity {
 
                 case R.id.navigation_remove:
                     remove();
+                    Intent homepage = new Intent (GamePage.this,Home.class);
+                    GamePage.this.startActivity(homepage);
                     return true;
             }
             return false;

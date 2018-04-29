@@ -8,15 +8,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Locale;
-
-import static locale.LocaleHelper.updateLanguage;
 
 /**
  * Created by Endrit Haziri on 26.04.2018.

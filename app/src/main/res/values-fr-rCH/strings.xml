@@ -41,4 +41,8 @@
     <string name="Dodskamp">Coluccia Mickael</string>
     <string name="Amaterasu">Haziri Endrit</string>
     <string name="aboutDescription">Dans le contexte du cours Android, nous sommes amener à créer une application qui permet d\'ajouter, de modifier et de supprimer des données dans 3 tables différentes</string>
+
+
+    <string name="btn_en">Anglais</string>
+    <string name="btn_fr">Français</string>
 </resources>

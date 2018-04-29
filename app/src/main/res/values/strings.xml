@@ -41,4 +41,9 @@
     <string name="Dodskamp">Coluccia Mickael</string>
     <string name="Amaterasu">Haziri Endrit</string>
     <string name="aboutDescription">In context of the Android course we need to create an application where we can add/edit/remove some information in three different table.</string>
+
+
+    <string name="btn_en">English</string>
+    <string name="btn_fr">French</string>
+
 </resources>

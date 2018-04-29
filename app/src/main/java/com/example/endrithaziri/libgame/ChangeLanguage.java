@@ -1,6 +1,7 @@
 package com.example.endrithaziri.libgame;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,7 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.Locale;
 
 import static locale.LocaleHelper.updateLanguage;
 
@@ -16,12 +21,14 @@ import static locale.LocaleHelper.updateLanguage;
  * Created by Endrit Haziri on 26.04.2018.
  */
 
-public class ChangeLanguage extends Activity {
+public class ChangeLanguage extends Activity implements View.OnClickListener {
 
     /**
      * VARIABLE DECLARATION
      */
-    private ListView lang;
+    private TextView txt_hello;
+    private Button btn_en, btn_ru, btn_fr, btn_de;
+    private Locale myLocale;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -38,32 +45,22 @@ public class ChangeLanguage extends Activity {
 
     /**
      * ON CREATE METHOD
+     *
      * @param savedInstanceState
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_language);
+        this.btn_en = (Button)findViewById(R.id.btn_en);
+        this.btn_fr = (Button)findViewById(R.id.btn_fr);
 
-        /**
-         *  PREPARE VARIABLES
-         */
-        lang = findViewById(R.id.listViewLang);
-        lang.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item,getResources().getStringArray(R.array.list_lang)));
-        lang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i) {
-                    case 0:
-                        changeLanguage("fr");
-                        return;
-                    case 1:
-                        changeLanguage("en");
-                        return;
-                }
-            }
-        });
 
+        this.btn_en.setOnClickListener(this);
+        this.btn_fr.setOnClickListener(this);
+
+
+        loadLocale();
         /**
          * NAVIGATION BAR
          */
@@ -71,11 +68,58 @@ public class ChangeLanguage extends Activity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    /**
-     * CHANGE THE LANGUAGE OF THE APP
-     */
-    protected void changeLanguage(String lang) {
-        updateLanguage(this, lang);
+    public void changeLang(String lang) {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        updateTexts();
+    }
+
+    public void saveLocale(String lang) {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
+    public void loadLocale() {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
+    }
+
+    private void updateTexts() {
+
+        btn_en.setText(R.string.btn_en);
+        btn_fr.setText(R.string.btn_fr);
+
+    }
+
+    public void onClick(View v) {
+        String lang = "en";
+        switch (v.getId()) {
+            case R.id.btn_en:
+                lang = "en";
+                break;
+            case R.id.btn_fr:
+                lang = "fr";
+                break;
+            default:
+                break;
+        }
+        changeLang(lang);
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
 

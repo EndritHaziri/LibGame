@@ -112,7 +112,7 @@ public class Home extends AppCompatActivity {
             drawable = new BitmapDrawable(getResources(), bitmap);
             try {
                 stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             button.setImageDrawable(drawable);

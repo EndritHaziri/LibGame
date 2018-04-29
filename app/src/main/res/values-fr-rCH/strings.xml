@@ -18,6 +18,7 @@
     <string name="chooseImage">Choisir une image</string>
     <string name="settings">Configuration</string>
     <string name="error_empty_fields">Erreur, veuillez remplir tous les champs</string>
+    <string name="error_img_too_big">Image trop grande. Veuillez en choisir une autre</string>
     <string name="game_saved">Jeu sauvegardé</string>
     <string name="game_edited">Jeu modifié</string>
     <string name="game_deleted">Jeu supprimé</string>

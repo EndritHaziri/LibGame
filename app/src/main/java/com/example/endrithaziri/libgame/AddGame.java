@@ -44,7 +44,7 @@ public class AddGame extends AppCompatActivity {
     private Button buttonEditDev, buttonEditPub;
     private BottomNavigationItemView buttonAddGame;
     private ImageView image;
-    private String imgData;
+    private String imgData = "";
     private String name, description, id_publisher, id_developer;
     private List<Publisher> publishers;
     private List<Developer> developers;
@@ -188,8 +188,10 @@ public class AddGame extends AppCompatActivity {
         /**
          * INSERT THE NEW GAME
          */
-        if(name.equals("") || description.equals(""))
+        if(name.equals("") || description.equals("")) {
             Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        } else if(imgData.equals(""))
+            Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();
         else {
             gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
 
@@ -246,8 +248,15 @@ public class AddGame extends AppCompatActivity {
         immage.compress(Bitmap.CompressFormat.PNG, 10, baos);
         immage.compress(Bitmap.CompressFormat.JPEG, 10, baos);
         byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-        return imageEncoded;
+        if(b.length / 1024 >= 1024) {
+            System.out.println(b.length/1024 + " Image too big");
+            return "";
+        } else {
+            String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+            System.out.println(b.length/1024 + " ok");
+            return imageEncoded;
+        }
+
     }
 
     /**

@@ -87,13 +87,17 @@ public class EditPublisher extends AppCompatActivity {
         /**
          * UPDATE THE PUBLISHER
          */
-        publisherViewModel.update(pub.getId(), newName);
+        if(newName.trim().equals(""))
+            Toast.makeText(EditPublisher.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        else {
+            publisherViewModel.update(pub.getId(), newName);
 
-        /**
-         * SHOW INFORMATIONS AND CLOSE
-         */
-        Toast.makeText(EditPublisher.this, R.string.publisher_edited, Toast.LENGTH_SHORT).show();
-        finish();
+            /**
+             * SHOW INFORMATIONS AND CLOSE
+             */
+            Toast.makeText(EditPublisher.this, R.string.publisher_edited, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     /**

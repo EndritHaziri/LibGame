@@ -70,12 +70,16 @@ public class AddPublisher extends AppCompatActivity {
         /**
          * INSERT THE NEW PUBLISHER
          */
-        publisherViewModel.insert(new Publisher(name));
+        if(name.trim().equals(""))
+            Toast.makeText(AddPublisher.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        else {
+            publisherViewModel.insert(new Publisher(name));
 
-        /**
-         * SHOW INFORMATIONS AND CLOSE
-         */
-        Toast.makeText(AddPublisher.this, R.string.publisher_saved, Toast.LENGTH_SHORT).show();
-        finish();
+            /**
+             * SHOW INFORMATION AND CLOSE
+             */
+            Toast.makeText(AddPublisher.this, R.string.publisher_saved, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 }

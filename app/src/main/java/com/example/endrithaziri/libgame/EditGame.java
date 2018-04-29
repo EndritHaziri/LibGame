@@ -87,13 +87,18 @@ public class EditGame extends AppCompatActivity {
         /**
          * UPDATE THE GAME
          */
-        gameViewModel.update(g.getId(), newTitle, newDescription);
+        if(newTitle.trim().equals("") || newDescription.trim().equals(""))
+            Toast.makeText(EditGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        else {
+            gameViewModel.update(g.getId(), newTitle, newDescription);
 
-        /**
-         * SHOW INFORMATIONS AND CLOSE
-         */
-        Toast.makeText(EditGame.this, R.string.game_edited, Toast.LENGTH_SHORT).show();
-        finish();
+            /**
+             * SHOW INFORMATIONS AND CLOSE
+             */
+            Toast.makeText(EditGame.this, R.string.game_edited, Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
     }
 
 }

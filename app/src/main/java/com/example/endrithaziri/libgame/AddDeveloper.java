@@ -71,13 +71,19 @@ public class AddDeveloper extends AppCompatActivity {
         /**
          * INSERT A NEW DEVELOPER
          */
-        devViewModel.insert(new Developer(name));
+        if(name.trim().equals(""))
+            Toast.makeText(AddDeveloper.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        else {
+            devViewModel.insert(new Developer(name));
 
-        /**
-         * SHOW INFORMATIONS AND CLOSE
-         */
-        Toast.makeText(AddDeveloper.this, R.string.developer_saved, Toast.LENGTH_SHORT).show();
-        finish();
+            /**
+             * SHOW INFORMATION AND CLOSE
+             */
+            Toast.makeText(AddDeveloper.this, R.string.developer_saved, Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+
     }
 
 }

@@ -88,13 +88,17 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          * UPDATE THE DEVELOPER
          */
-        developerViewModel.update(dev.getId(), newName);
+        if(newName.trim().equals(""))
+            Toast.makeText(EditDeveloper.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        else {
+            developerViewModel.update(dev.getId(), newName);
 
-        /**
-         * SHOW INFORMATIONS AND CLOSE
-         */
-        Toast.makeText(EditDeveloper.this, R.string.developer_edited, Toast.LENGTH_SHORT).show();
-        finish();
+            /**
+             * SHOW INFORMATIONS AND CLOSE
+             */
+            Toast.makeText(EditDeveloper.this, R.string.developer_edited, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     /**
@@ -108,7 +112,7 @@ public class EditDeveloper extends AppCompatActivity {
         developerViewModel.deleteDeveloper(dev.getId());
 
         /**
-         * SHOW INFORMATIONS AND CLOSE
+         * SHOW INFORMATION AND CLOSE
          */
         Toast.makeText(EditDeveloper.this, R.string.developer_deleted, Toast.LENGTH_SHORT).show();
         finish();

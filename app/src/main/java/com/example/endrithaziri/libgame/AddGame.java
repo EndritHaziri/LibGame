@@ -188,7 +188,7 @@ public class AddGame extends AppCompatActivity {
         /**
          * INSERT THE NEW GAME
          */
-        if(name.equals("") || description.equals("")) {
+        if(name.trim().equals("") || description.trim().equals("")) {
             Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         } else if(imgData.equals(""))
             Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();

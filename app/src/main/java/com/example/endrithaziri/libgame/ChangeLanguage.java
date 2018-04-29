@@ -1,6 +1,7 @@
 package com.example.endrithaziri.libgame;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,7 +37,8 @@ public class ChangeLanguage extends Activity implements View.OnClickListener {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    finish();
+                    Intent homepage = new Intent (ChangeLanguage.this,Home.class);
+                    ChangeLanguage.this.startActivity(homepage);
                     return true;
             }
             return false;

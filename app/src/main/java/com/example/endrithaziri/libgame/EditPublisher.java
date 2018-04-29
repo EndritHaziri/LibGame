@@ -1,6 +1,7 @@
 package com.example.endrithaziri.libgame;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -30,9 +31,13 @@ public class EditPublisher extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_ok:
                     update();
+                    Intent addgamepage = new Intent (EditPublisher.this,AddGame.class);
+                    EditPublisher.this.startActivity(addgamepage);
                     return true;
                 case R.id.navigation_remove:
                     remove();
+                    Intent addgamepage2 = new Intent (EditPublisher.this,AddGame.class);
+                    EditPublisher.this.startActivity(addgamepage2);
                     return true;
                 case R.id.navigation_cancel:
                     finish();

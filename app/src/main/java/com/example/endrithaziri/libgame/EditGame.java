@@ -92,7 +92,7 @@ public class EditGame extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(EditGame.this, "Game edited", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditGame.this, R.string.game_edited, Toast.LENGTH_SHORT).show();
         finish();
     }
 

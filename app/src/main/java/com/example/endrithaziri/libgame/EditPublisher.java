@@ -92,7 +92,7 @@ public class EditPublisher extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(EditPublisher.this, "Publisher edited", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditPublisher.this, R.string.publisher_edited, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -109,7 +109,7 @@ public class EditPublisher extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(EditPublisher.this, "Publisher deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditPublisher.this, R.string.publisher_deleted, Toast.LENGTH_SHORT).show();
         finish();
     }
 

@@ -17,6 +17,16 @@
     <string name="description">Description</string>
     <string name="chooseImage">Choisir une image</string>
     <string name="settings">Configuration</string>
+    <string name="error_empty_fields">Erreur, veuillez remplir tous les champs</string>
+    <string name="game_saved">Jeu sauvegardé</string>
+    <string name="game_edited">Jeu modifié</string>
+    <string name="game_deleted">Jeu supprimé</string>
+    <string name="developer_saved">Développeur sauvegardé</string>
+    <string name="developer_edited">Développeur modifié</string>
+    <string name="developer_deleted">Développeur supprimé</string>
+    <string name="publisher_edited">Editeur modifié</string>
+    <string name="publisher_saved">Editeur sauvegardé</string>
+    <string name="publisher_deleted">Editeur supprimé</string>
 
     <string name="title_activity_add_game">Ajouter un jeu</string>
     <string name="title_activity_add_developer">Ajouter un développeur</string>

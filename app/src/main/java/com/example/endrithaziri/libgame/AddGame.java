@@ -188,13 +188,17 @@ public class AddGame extends AppCompatActivity {
         /**
          * INSERT THE NEW GAME
          */
-        gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
+        if(name.equals("") || description.equals(""))
+            Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        else {
+            gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
 
-        /**
-         * SHOW INFORMATIONS AND CLOSE
-         */
-        Toast.makeText(AddGame.this, "Game saved", Toast.LENGTH_SHORT).show();
-        finish();
+            /**
+             * SHOW INFORMATION AND CLOSE
+             */
+            Toast.makeText(AddGame.this, R.string.game_saved, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     /**
@@ -220,17 +224,12 @@ public class AddGame extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             try {
-                Toast.makeText(AddGame.this, "Image saved", Toast.LENGTH_SHORT).show();
                 stream = getContentResolver().openInputStream(data.getData());
                 realImage = BitmapFactory.decodeStream(stream);
                 image.setImageBitmap(realImage);
                 imgData = encodeToBase64(realImage);
             }
             catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -244,7 +243,8 @@ public class AddGame extends AppCompatActivity {
     public static String encodeToBase64(Bitmap image) {
         Bitmap immage = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        immage.compress(Bitmap.CompressFormat.PNG, 10, baos);
+        immage.compress(Bitmap.CompressFormat.JPEG, 10, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
         return imageEncoded;

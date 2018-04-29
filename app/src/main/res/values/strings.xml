@@ -16,6 +16,16 @@
     <string name="description">Description</string>
     <string name="chooseImage">Choose an image</string>
     <string name="settings">Settings</string>
+    <string name="error_empty_fields">Error, please fill all the fields</string>
+    <string name="game_saved">Game saved</string>
+    <string name="game_edited">Game edited</string>
+    <string name="game_deleted">Game deleted</string>
+    <string name="developer_saved">Developer saved</string>
+    <string name="developer_edited">Developer edited</string>
+    <string name="developer_deleted">Developer deleted</string>
+    <string name="publisher_saved">Publisher saved</string>
+    <string name="publisher_deleted">Publisher deleted</string>
+    <string name="publisher_edited">Publisher edited</string>
 
     <string name="title_activity_add_game">Add Game</string>
     <string name="title_activity_add_developer">Add Developer</string>

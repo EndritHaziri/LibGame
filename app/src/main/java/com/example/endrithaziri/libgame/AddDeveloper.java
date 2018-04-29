@@ -76,7 +76,7 @@ public class AddDeveloper extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(AddDeveloper.this, "Developer saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AddDeveloper.this, R.string.developer_saved, Toast.LENGTH_SHORT).show();
         finish();
     }
 

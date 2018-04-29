@@ -93,7 +93,7 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(EditDeveloper.this, "Developer edited", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditDeveloper.this, R.string.developer_edited, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -110,7 +110,7 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(EditDeveloper.this, "Developer deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditDeveloper.this, R.string.developer_deleted, Toast.LENGTH_SHORT).show();
         finish();
     }
 

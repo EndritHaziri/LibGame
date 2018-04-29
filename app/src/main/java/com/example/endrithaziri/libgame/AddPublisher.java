@@ -75,7 +75,7 @@ public class AddPublisher extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(AddPublisher.this, "Publisher saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AddPublisher.this, R.string.publisher_saved, Toast.LENGTH_SHORT).show();
         finish();
     }
 }

@@ -139,7 +139,7 @@ public class GamePage extends AppCompatActivity {
         /**
          * SHOW INFORMATIONS AND CLOSE
          */
-        Toast.makeText(GamePage.this, "Game deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(GamePage.this, R.string.game_deleted, Toast.LENGTH_SHORT).show();
         finish();
     }
 

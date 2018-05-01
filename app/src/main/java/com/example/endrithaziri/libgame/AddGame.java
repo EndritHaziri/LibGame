@@ -130,8 +130,7 @@ public class AddGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveData();
-                Intent homepage = new Intent (AddGame.this,Home.class);
-                AddGame.this.startActivity(homepage);
+
 
             }
         });
@@ -202,7 +201,8 @@ public class AddGame extends AppCompatActivity {
              * SHOW INFORMATION AND CLOSE
              */
             Toast.makeText(AddGame.this, R.string.game_saved, Toast.LENGTH_SHORT).show();
-            finish();
+            Intent homepage = new Intent (AddGame.this,Home.class);
+            AddGame.this.startActivity(homepage);
         }
     }
 

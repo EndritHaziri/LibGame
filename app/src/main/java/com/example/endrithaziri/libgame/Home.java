@@ -77,10 +77,10 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // TODO: FAIRE FONCTIONNER CETTE MERDE
-        /*mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Intent login = new Intent(Home.this,LoginActivity.class);
-        Home.this.startActivity(login);*/
+        Home.this.startActivity(login);
 
         setContentView(R.layout.activity_home);
 

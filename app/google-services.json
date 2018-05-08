@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "612883099017-ovru6ks9c2fegbj5m791v3st2ri1d0d9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.endrithaziri.libgame",
+            "certificate_hash": "c5892c78bb6ced9c08a29340af241896c1f974f5"
+          }
+        },
+        {
           "client_id": "612883099017-d2i13n93l4num623j5angi7b12udk24j.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612883099017-d2i13n93l4num623j5angi7b12udk24j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -7,3 +7,6 @@
 /build
 /captures
 .externalNativeBuild
+.idea/modules.xml
+app/src/main/java/db/LibGameRoomDatabase.java
+LibGame/.idea/workspace.xml

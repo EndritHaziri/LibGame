@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "612883099017",
+    "firebase_url": "https://libgame-20422.firebaseio.com",
+    "project_id": "libgame-20422",
+    "storage_bucket": "libgame-20422.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612883099017:android:7a5776ff3bedb763",
+        "android_client_info": {
+          "package_name": "com.example.endrithaziri.libgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612883099017-d2i13n93l4num623j5angi7b12udk24j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXOwg8hrbnjZWstL7wrndxsP0QWHycFr0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

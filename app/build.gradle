@@ -39,4 +39,8 @@ dependencies {
     // Lifecycle components
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+
+    compile 'com.google.firebase:firebase-core:15.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

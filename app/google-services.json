@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "612883099017-h6u4eabn0mhq32qvo9rsj079pr1qt1bl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.endrithaziri.libgame",
+            "certificate_hash": "33b89ddcc9b0fbb98574e2f0bc2c6411b2f8ca7f"
+          }
+        },
+        {
           "client_id": "612883099017-ovru6ks9c2fegbj5m791v3st2ri1d0d9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

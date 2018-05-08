@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,6 +67,7 @@ public class Home extends AppCompatActivity {
             return false;
         }
     };
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     /**

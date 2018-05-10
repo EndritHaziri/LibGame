@@ -15,12 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
 import entity.Game;
+import firebase.db.Firebase;
 import view_model.GameViewModel;
 
 public class Home extends AppCompatActivity {
@@ -28,6 +33,7 @@ public class Home extends AppCompatActivity {
     /**
      * VARIABLE DECLARATION
      */
+    private FirebaseAuth mAuth;
     private GameViewModel gameViewModel;
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -61,6 +67,7 @@ public class Home extends AppCompatActivity {
             return false;
         }
     };
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     /**
@@ -70,6 +77,13 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // TODO: FAIRE FONCTIONNER CETTE MERDE
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Intent login = new Intent(Home.this,LoginActivity.class);
+        Home.this.startActivity(login);
+
         setContentView(R.layout.activity_home);
 
         /**

@@ -45,4 +45,17 @@
 
     <string name="btn_en">Anglais</string>
     <string name="btn_fr">Français</string>
+    <string name="action_register">S\'enregistrer</string>
+    <string name="title_home">Accueil</string>
+    <string name="title_activity_login">Se connecter</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Mot de passe</string>
+    <string name="action_sign_in">Se connecter ou s\'enregistrer</string>
+    <string name="action_sign_in_short">Se connecter</string>
+    <string name="error_invalid_email">L\'adresse mail est invalide</string>
+    <string name="error_invalid_password">Mot de passe trop court</string>
+    <string name="error_incorrect_password">Mot de passe incorrect</string>
+    <string name="error_field_required">Ce champ est obligatoire</string>
+    <string name="permission_rationale">Permission demandée pour les contacts</string>
+    <string name="connected_as">Connected as:</string>
 </resources>

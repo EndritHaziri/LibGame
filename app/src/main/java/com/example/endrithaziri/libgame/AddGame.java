@@ -10,6 +10,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,12 +20,24 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import entity.Developer;
 import entity.Game;
@@ -60,6 +73,15 @@ public class AddGame extends AppCompatActivity {
     private InputStream stream;
     private Bitmap realImage;
 
+    /**
+     *  FIREBASE VARIABLES
+     */
+    private static final String TAG = "AddToDatabase";
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
+    private StorageReference mStorageRef;
 
     /**
      * ON CREATE
@@ -90,6 +112,54 @@ public class AddGame extends AppCompatActivity {
         etDescription = findViewById(R.id.addGameDescription);
         spinnerDev = findViewById(R.id.spinnerDev);
         spinnerPub = findViewById(R.id.spinnerPub);
+
+        /**
+         * FIREBASE
+         */
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    toastMessage("Successfully signed out.");
+                }
+            }
+        };
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                Object value = dataSnapshot.getValue();
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        buttonAddGame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                saveData();
+            }
+        });
 
         /**
          * GET ALL THE PUBLISHER AND DEVELOPER
@@ -126,14 +196,12 @@ public class AddGame extends AppCompatActivity {
                 openGallery(view);
             }
         });
-        buttonAddGame.setOnClickListener(new View.OnClickListener(){
+        /*buttonAddGame.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 saveData();
-
-
             }
-        });
+        });*/
         buttonCancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -188,9 +256,9 @@ public class AddGame extends AppCompatActivity {
         id_publisher = spinnerPub.getSelectedItem().toString();
 
         /**
-         * INSERT THE NEW GAME
+         * INSERT THE NEW GAME - OLD
          */
-        if(name.trim().equals("") || description.trim().equals("")) {
+        /*if(name.trim().equals("") || description.trim().equals("")) {
             Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         } else if(imgData.equals(""))
             Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();
@@ -200,9 +268,27 @@ public class AddGame extends AppCompatActivity {
             /**
              * SHOW INFORMATION AND CLOSE
              */
-            Toast.makeText(AddGame.this, R.string.game_saved, Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(AddGame.this, R.string.game_saved, Toast.LENGTH_SHORT).show();
             Intent homepage = new Intent (AddGame.this,Home.class);
             AddGame.this.startActivity(homepage);
+        }*/
+        /**
+         * INSERT THE NEW GAME - FIREBASE
+         */
+        Map<String,Object> game = new HashMap<>();
+        game.put("title", name);
+        game.put("description", description);
+        game.put("developer_id", id_developer.toLowerCase().trim());
+        game.put("publisher_id", id_publisher.toLowerCase().trim());
+
+        Log.d(TAG, "onClick: Attempting to add object to database.");
+        if(name.trim().equals("") || description.trim().equals("")) {
+            Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+        } else if(imgData.equals(""))
+            Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();
+        else {
+            myRef.child("games").child(name).updateChildren(game);
+            toastMessage("ok");
         }
     }
 
@@ -272,5 +358,21 @@ public class AddGame extends AppCompatActivity {
        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 }

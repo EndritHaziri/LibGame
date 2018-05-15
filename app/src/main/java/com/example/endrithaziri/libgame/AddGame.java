@@ -1,9 +1,11 @@
 package com.example.endrithaziri.libgame;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -20,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,8 +33,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,13 +78,17 @@ public class AddGame extends AppCompatActivity {
     private EditText etName, etDescription;
     private InputStream stream;
     private Bitmap realImage;
+    private EditText imageName;
+    private ProgressDialog mProgressDialog;
+    private ArrayList<String> pathArray;
+    private int array_position;
 
     /**
      *  FIREBASE VARIABLES
      */
     private static final String TAG = "AddToDatabase";
     private FirebaseDatabase mFirebaseDatabase;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth Auth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private StorageReference mStorageRef;
@@ -116,7 +126,7 @@ public class AddGame extends AppCompatActivity {
         /**
          * FIREBASE
          */
-        mAuth = FirebaseAuth.getInstance();
+        Auth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -196,12 +206,12 @@ public class AddGame extends AppCompatActivity {
                 openGallery(view);
             }
         });
-        /*buttonAddGame.setOnClickListener(new View.OnClickListener(){
+        buttonAddGame.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 saveData();
             }
-        });*/
+        });
         buttonCancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -258,6 +268,37 @@ public class AddGame extends AppCompatActivity {
         /**
          * INSERT THE NEW GAME - OLD
          */
+        mProgressDialog.setMessage("Uploading Image...");
+        mProgressDialog.show();
+
+        //get the signed in user
+        FirebaseUser user = Auth.getCurrentUser();
+        String userID = user.getUid();
+
+        String name = imageName.getText().toString();
+        if(!name.equals("")){
+            Uri uri = Uri.fromFile(new File(pathArray.get(array_position)));
+            StorageReference storageReference = mStorageRef.child("images/users/" + userID + "/" + name + ".jpg");
+            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // Get a URL to the uploaded content
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    toastMessage("Upload Success");
+                    mProgressDialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    toastMessage("Upload Failed");
+                    mProgressDialog.dismiss();
+                }
+            })
+            ;
+        }
+
+
+
         /*if(name.trim().equals("") || description.trim().equals("")) {
             Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         } else if(imgData.equals(""))
@@ -361,14 +402,14 @@ public class AddGame extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+        Auth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
+            Auth.removeAuthStateListener(mAuthListener);
         }
     }
 

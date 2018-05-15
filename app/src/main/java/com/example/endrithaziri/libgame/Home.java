@@ -19,6 +19,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -34,6 +39,8 @@ public class Home extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference mRef;
     private GameViewModel gameViewModel;
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -85,7 +92,6 @@ public class Home extends AppCompatActivity {
         Home.this.startActivity(login);
 
         setContentView(R.layout.activity_home);
-
         /**
          *  PREPARE VARIABLES
          */
@@ -120,6 +126,8 @@ public class Home extends AppCompatActivity {
      * @param games
      */
     protected void buildUI(List<Game> games) {
+        //List<Game> gamess =  gameViewModel.getGame();
+
         for (final Game g : games) {
             button = new ImageButton(this);
             bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
@@ -143,6 +151,7 @@ public class Home extends AppCompatActivity {
             });
             linearLayout.addView(button);
             linearLayout.addView(new View(this));
+            //System.out.println("====================================" + g.getName());
         }
     }
 }

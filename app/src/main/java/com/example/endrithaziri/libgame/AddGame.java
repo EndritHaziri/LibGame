@@ -3,10 +3,12 @@ package com.example.endrithaziri.libgame;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
@@ -78,10 +80,14 @@ public class AddGame extends AppCompatActivity {
     private EditText etName, etDescription;
     private InputStream stream;
     private Bitmap realImage;
+
     private EditText imageName;
     private ProgressDialog mProgressDialog;
     private ArrayList<String> pathArray;
     private int array_position;
+
+    private Intent dataImg;
+    private Cursor cursor;
 
     /**
      *  FIREBASE VARIABLES
@@ -262,8 +268,8 @@ public class AddGame extends AppCompatActivity {
          */
         name = etName.getText().toString();
         description = etDescription.getText().toString();
-        id_developer = spinnerDev.getSelectedItem().toString();
-        id_publisher = spinnerPub.getSelectedItem().toString();
+        id_developer = removeSpace(spinnerDev.getSelectedItem().toString());
+        id_publisher = removeSpace( spinnerPub.getSelectedItem().toString());
 
         /**
          * INSERT THE NEW GAME - OLD
@@ -316,7 +322,8 @@ public class AddGame extends AppCompatActivity {
         /**
          * INSERT THE NEW GAME - FIREBASE
          */
-        Map<String,Object> game = new HashMap<>();
+        Uri downloadUrl;
+        final Map<String,Object> game = new HashMap<>();
         game.put("title", name);
         game.put("description", description);
         game.put("developer_id", id_developer.toLowerCase().trim());
@@ -328,6 +335,23 @@ public class AddGame extends AppCompatActivity {
         } else if(imgData.equals(""))
             Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();
         else {
+            Uri uri = Uri.fromFile(new File(dataImg.getData().getPath()));
+            System.out.println("====================" + uri.getPath().toString() + "====================");
+            StorageReference storageReference = mStorageRef.child("img/" + name + ".jpg");
+            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // Get a URL to the uploaded content
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    game.put("url_image", downloadUrl);
+                    toastMessage("Upload Success");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    toastMessage("Upload Failed");
+                }
+            });
             myRef.child("games").child(name).updateChildren(game);
             toastMessage("ok");
         }
@@ -356,6 +380,7 @@ public class AddGame extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             try {
+                dataImg = data;
                 stream = getContentResolver().openInputStream(data.getData());
                 realImage = BitmapFactory.decodeStream(stream);
                 image.setImageBitmap(realImage);
@@ -415,5 +440,12 @@ public class AddGame extends AppCompatActivity {
 
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    private String removeSpace(String s) {
+        String s2 = "";
+        s2 = s.replaceAll("\\s", "");
+
+        return s2;
     }
 }

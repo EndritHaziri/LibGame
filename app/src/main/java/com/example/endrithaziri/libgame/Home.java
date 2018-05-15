@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class Home extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase database;
     private DatabaseReference mRef;
     private GameViewModel gameViewModel;
@@ -85,11 +87,20 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: FAIRE FONCTIONNER CETTE MERDE
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Intent login = new Intent(Home.this,LoginActivity.class);
-        Home.this.startActivity(login);
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    return;
+                } else {
+                    Intent login = new Intent(Home.this,LoginActivity.class);
+                    Home.this.startActivity(login);
+                }
+            }
+        };
 
         setContentView(R.layout.activity_home);
         /**

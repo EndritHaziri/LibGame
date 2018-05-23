@@ -14,6 +14,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ public class GamePage extends AppCompatActivity {
     /**
      * VARIABLE DECLARATION
      */
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private Game game;
     private TextView description, title, publisher, developer;
     private ImageButton pic;
@@ -76,6 +81,8 @@ public class GamePage extends AppCompatActivity {
         description = findViewById(R.id.gameDescription);
         developer = findViewById(R.id.gamedevelopper);
         publisher = findViewById(R.id.gamePublisher);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("games");
 
         /** GET THE GAME BY ID */
         game = (Game)getIntent().getSerializableExtra("game");
@@ -101,7 +108,7 @@ public class GamePage extends AppCompatActivity {
         description.setText(game.getDescription());
 
         try {
-            developer.setText(game.getDeveloper_id());
+            developer.setText(game.getPublisher_id());
         } catch (NullPointerException n) {
             developer.setText("UNKNOWN DEVELOPER");
         }
@@ -126,7 +133,7 @@ public class GamePage extends AppCompatActivity {
         /**
          * DELETE THE GAME
          */
-        //gameViewModel.deleteGame(g.getId());
+        myRef.child(game.getId()).removeValue();
 
         /**
          * SHOW INFORMATIONS AND CLOSE

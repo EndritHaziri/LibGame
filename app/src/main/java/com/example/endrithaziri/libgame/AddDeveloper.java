@@ -6,10 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import entity.Developer;
 
@@ -19,8 +26,9 @@ public class AddDeveloper extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private String name;
-    //private DeveloperViewModel devViewModel;
     private EditText etName;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -48,8 +56,9 @@ public class AddDeveloper extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        //devViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
         etName = findViewById(R.id.editTextDevelopper);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference("developers");
 
         /**
          * NAVIGATION BAR
@@ -73,7 +82,17 @@ public class AddDeveloper extends AppCompatActivity {
         if(name.trim().equals(""))
             Toast.makeText(AddDeveloper.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            //devViewModel.insert(new Developer(name));
+            /**
+             * INSERT THE NEW DEVELOPER - FIREBASE
+             */
+            Map<String,Object> dev = new HashMap<>();
+            dev.put("name", name);
+
+            if(name.trim().equals("")) {
+                Toast.makeText(this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+            } else {
+                myRef.child(name).updateChildren(dev);
+            }
 
             /**
              * SHOW INFORMATION AND CLOSE

@@ -11,6 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import entity.Publisher;
 
 public class AddPublisher extends AppCompatActivity {
@@ -19,8 +25,9 @@ public class AddPublisher extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private String name;
-    //private PublisherViewModel publisherViewModel;
     private EditText etName;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -51,8 +58,9 @@ public class AddPublisher extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
         etName = findViewById(R.id.editTextPublisher);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference("publishers");
 
         /**
          * NAVIGATION BAR
@@ -76,8 +84,17 @@ public class AddPublisher extends AppCompatActivity {
         if(name.trim().equals(""))
             Toast.makeText(AddPublisher.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            //publisherViewModel.insert(new Publisher(name));
+            /**
+             * INSERT THE NEW PUBLISHER - FIREBASE
+             */
+            Map<String,Object> pub = new HashMap<>();
+            pub.put("name", name);
 
+            if(name.trim().equals("")) {
+                Toast.makeText(this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+            } else {
+                myRef.child(name).updateChildren(pub);
+            }
             /**
              * SHOW INFORMATION AND CLOSE
              */

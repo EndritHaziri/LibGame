@@ -12,23 +12,22 @@ public class Publisher {
     /* ==== DECLARATION ==== */
 
     @NonNull
-    private int id;
+    private String id;
 
     private String name;
 
     /* ==== CONSTRUCTOR ==== */
 
-    public Publisher(String name) {
-        this.name = name;
+    public Publisher() {
     }
 
     /* ==== GETTER AND SETTER ==== */
     @NonNull
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull int id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

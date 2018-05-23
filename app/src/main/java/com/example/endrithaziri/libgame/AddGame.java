@@ -57,11 +57,8 @@ public class AddGame extends AppCompatActivity {
     private ImageView image;
     private String imgData = "";
     private String name, description, id_publisher, id_developer;
-    private List<Publisher> publishers;
-    private List<Developer> developers;
-    //private GameViewModel gameViewModel;
-    //private DeveloperViewModel developerViewModel;
-    //private PublisherViewModel publisherViewModel;
+    private List<Publisher> publishers = new ArrayList<>();
+    private List<Developer> developers = new ArrayList<>();
     private Spinner spinnerDev, spinnerPub;
     private List<String> publishersName = new ArrayList<>();
     private List<String> developersName = new ArrayList<>();
@@ -75,9 +72,7 @@ public class AddGame extends AppCompatActivity {
      */
     private static final String TAG = "AddToDatabase";
     private FirebaseDatabase mFirebaseDatabase;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef, myRefPub, myRefDev;
     private StorageReference mStorageRef;
 
     /**
@@ -92,9 +87,6 @@ public class AddGame extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        //gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-        //developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
-        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
         spinnerDev = findViewById(R.id.spinnerDev);
         spinnerPub = findViewById(R.id.spinnerPub);
         buttonImg = findViewById(R.id.buttonAddImageGame);
@@ -113,56 +105,17 @@ public class AddGame extends AppCompatActivity {
         /**
          * FIREBASE
          */
-        mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        myRef = mFirebaseDatabase.getReference("games");
+        myRefPub = mFirebaseDatabase.getReference("publishers");
+        myRefDev = mFirebaseDatabase.getReference("developers");
         mStorageRef = FirebaseStorage.getInstance().getReference();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    toastMessage("Successfully signed in with: " + user.getEmail());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    toastMessage("Successfully signed out.");
-                }
-            }
-        };
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Object value = dataSnapshot.getValue();
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-        buttonAddGame.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                saveData();
-            }
-        });
 
         /**
          * GET ALL THE PUBLISHER AND DEVELOPER
          */
-        //publishers = publisherViewModel.getAllPublisher();
-        //developers = developerViewModel.getAllDeveloper();
+        publishers = getAllPublishers();
+        developers = getAllDevelopers();
 
         for (Publisher p: publishers)
             publishersName.add(p.getName());
@@ -173,13 +126,13 @@ public class AddGame extends AppCompatActivity {
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
-        aaDev = new ArrayAdapter(this,android.R.layout.simple_spinner_item, developersName);
+        aaDev = new ArrayAdapter(this, android.R.layout.simple_spinner_item, developersName);
         aaDev.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         spinnerDev.setAdapter(aaDev);
 
 
-        aaPub = new ArrayAdapter(this,android.R.layout.simple_spinner_item, publishersName);
+        aaPub = new ArrayAdapter(this, android.R.layout.simple_spinner_item, publishersName);
         aaPub.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         spinnerPub.setAdapter(aaPub);
@@ -193,12 +146,12 @@ public class AddGame extends AppCompatActivity {
                 openGallery(view);
             }
         });
-        /*buttonAddGame.setOnClickListener(new View.OnClickListener(){
+        buttonAddGame.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 saveData();
             }
-        });*/
+        });
         buttonCancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -238,6 +191,53 @@ public class AddGame extends AppCompatActivity {
         });
     }
 
+    private List<Publisher> getAllPublishers() {
+        final List<Publisher> p = new ArrayList<>();
+
+        myRefPub.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d: dataSnapshot.getChildren()) {
+                    Publisher publisher = d.getValue(Publisher.class);
+                    publisher.setId(d.getKey());
+                    System.out.println("===========pub===========" + publisher.getName());
+                    p.add(publisher);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                System.out.println("failed");
+            }
+        });
+
+        return publishers;
+    }
+
+    private List<Developer> getAllDevelopers() {
+        final List<Developer> dev = new ArrayList<>();
+
+        myRefDev.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d: dataSnapshot.getChildren()) {
+                    Developer developer = d.getValue(Developer.class);
+                    developer.setId(d.getKey());
+                    System.out.println("==========dev========" + developer.getName());
+                    dev.add(developer);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                System.out.println("failed");
+            }
+        });
+
+        return dev;
+    }
 
     /**
      * METHOD TO SAVE A NEW GAME
@@ -253,23 +253,6 @@ public class AddGame extends AppCompatActivity {
         id_publisher = spinnerPub.getSelectedItem().toString();
 
         /**
-         * INSERT THE NEW GAME - OLD
-         */
-        /*if(name.trim().equals("") || description.trim().equals("")) {
-            Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
-        } else if(imgData.equals(""))
-            Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();
-        else {
-            gameViewModel.insert(new Game(name, description, imgData, developerViewModel.getIdDev(id_developer), publisherViewModel.getPubId(id_publisher)));
-
-            /**
-             * SHOW INFORMATION AND CLOSE
-             */
-            /*Toast.makeText(AddGame.this, R.string.game_saved, Toast.LENGTH_SHORT).show();
-            Intent homepage = new Intent (AddGame.this,Home.class);
-            AddGame.this.startActivity(homepage);
-        }*/
-        /**
          * INSERT THE NEW GAME - FIREBASE
          */
         Map<String,Object> game = new HashMap<>();
@@ -284,7 +267,7 @@ public class AddGame extends AppCompatActivity {
         } else if(imgData.equals(""))
             Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();
         else {
-            myRef.child("games").child(name).updateChildren(game);
+            myRef.child(name).updateChildren(game);
             toastMessage("ok");
         }
     }
@@ -358,16 +341,14 @@ public class AddGame extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
+
+
 
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();

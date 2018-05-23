@@ -1,9 +1,7 @@
 package com.example.endrithaziri.libgame;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -18,7 +16,8 @@ import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import entity.Game;
 
@@ -27,16 +26,13 @@ public class GamePage extends AppCompatActivity {
     /**
      * VARIABLE DECLARATION
      */
-    private Game g;
-    private int id;
+    private Game game;
     private TextView description, title, publisher, developer;
     private ImageButton pic;
     private Bitmap bitmap;
     private Drawable drawable;
     private InputStream stream;
-    //private GameViewModel gameViewModel;
-    //private DeveloperViewModel developerViewModel;
-    //private PublisherViewModel publisherViewModel;
+    private List<Game> games;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -49,7 +45,7 @@ public class GamePage extends AppCompatActivity {
 
                 case R.id.navigation_edit:
                     Intent editGame = new Intent (GamePage.this, EditGame.class);
-                    editGame.putExtra("id", g.getId());
+                    editGame.putExtra("id", game.getId());
                     GamePage.this.startActivity(editGame);
                     return true;
 
@@ -80,41 +76,38 @@ public class GamePage extends AppCompatActivity {
         description = findViewById(R.id.gameDescription);
         developer = findViewById(R.id.gamedevelopper);
         publisher = findViewById(R.id.gamePublisher);
-        //gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-        //developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
-        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
 
         /** GET THE GAME BY ID */
-        id = getIntent().getIntExtra("id", 0);
-        //g = gameViewModel.getGameById(id);
+        game = (Game)getIntent().getSerializableExtra("game");
 
         /**
          *  GET AND DECODE THE PICTURE OF THE GAME
          */
-        bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
-        drawable = new BitmapDrawable(getResources(), bitmap);
+        //bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
+        //drawable = new BitmapDrawable(getResources(), bitmap);
 
-        try {
+        /*try {
             stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
-        title.setText(g.getTitle());
-        pic.setImageDrawable(drawable);
-        description.setText(g.getDescription());
+        title.setText(game.getTitle());
+        //pic.setImageDrawable(drawable);
+        pic.setImageDrawable(getResources().getDrawable(R.drawable.hearthstone_legende));
+        description.setText(game.getDescription());
 
         try {
-            //developer.setText(developerViewModel.getDevById(g.getDeveloper_id()).getName());
+            developer.setText(game.getDeveloper_id());
         } catch (NullPointerException n) {
             developer.setText("UNKNOWN DEVELOPER");
         }
 
         try {
-            //publisher.setText(publisherViewModel.getPubById(g.getPublisher_id()).getName());
+            publisher.setText(game.getPublisher_id());
         } catch (NullPointerException n) {
             publisher.setText("UNKNOWN PUBLISHER");
         }

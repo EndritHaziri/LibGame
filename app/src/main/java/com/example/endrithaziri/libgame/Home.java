@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,6 @@ public class Home extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseUser user;
-    //private GameViewModel gameViewModel;
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     private InputStream stream;
@@ -140,5 +140,32 @@ public class Home extends AppCompatActivity {
 
     }
 
-    
+    /**
+     * METHOD TO BUILD UI (1 IMAGE BY GAME)
+     * @param games
+     */
+    protected void buildUI(List<Game> games) {
+        for (final Game g : games) {
+            button = new ImageButton(this);
+            //bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
+            /*try {
+                stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
+            button.setImageDrawable(getResources().getDrawable(R.drawable.hearthstone_legende));
+            button.setLayoutParams(params);
+            button.setAdjustViewBounds(true);
+            button.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    gamePage = new Intent (Home.this, GamePage.class);
+                    gamePage.putExtra("game", g);
+                    Home.this.startActivity(gamePage);
+                }
+            });
+            linearLayout.addView(button);
+            linearLayout.addView(new View(this));
+        }
+    }
 }

@@ -11,8 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import entity.Developer;
-import view_model.DeveloperViewModel;
-import view_model.GameViewModel;
 
 public class EditDeveloper extends AppCompatActivity {
 
@@ -23,7 +21,7 @@ public class EditDeveloper extends AppCompatActivity {
     private int id;
     private String newName;
     private TextView name;
-    private DeveloperViewModel developerViewModel;
+    //private DeveloperViewModel developerViewModel;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -60,14 +58,14 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        //developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
         name = findViewById(R.id.editTextDev);
 
         /**
          * GET DEVELOPER
          */
         id = getIntent().getIntExtra("id", 0);
-        dev = developerViewModel.getDevById(id);
+        //dev = developerViewModel.getDevById(id);
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
@@ -96,7 +94,7 @@ public class EditDeveloper extends AppCompatActivity {
         if(newName.trim().equals(""))
             Toast.makeText(EditDeveloper.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            developerViewModel.update(dev.getId(), newName);
+            //developerViewModel.update(dev.getId(), newName);
 
             /**
              * SHOW INFORMATIONS AND CLOSE
@@ -114,7 +112,7 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          * REMOVE THE PUBLISHER
          */
-        developerViewModel.deleteDeveloper(dev.getId());
+        //developerViewModel.deleteDeveloper(dev.getId());
 
         /**
          * SHOW INFORMATION AND CLOSE

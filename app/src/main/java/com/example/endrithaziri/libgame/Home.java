@@ -10,23 +10,26 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import entity.Game;
-import firebase.db.Firebase;
-import view_model.GameViewModel;
 
 public class Home extends AppCompatActivity {
 
@@ -34,7 +37,10 @@ public class Home extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private FirebaseAuth mAuth;
-    private GameViewModel gameViewModel;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseUser user;
+    //private GameViewModel gameViewModel;
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     private InputStream stream;
@@ -42,6 +48,7 @@ public class Home extends AppCompatActivity {
     private Bitmap bitmap;
     private Drawable drawable;
     private Intent gamePage;
+    private List<Game> games;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -67,7 +74,6 @@ public class Home extends AppCompatActivity {
             return false;
         }
     };
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     /**
@@ -78,19 +84,51 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: FAIRE FONCTIONNER CETTE MERDE
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Intent login = new Intent(Home.this,LoginActivity.class);
-        Home.this.startActivity(login);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("games");
+        user = mAuth.getCurrentUser();
+        games = new ArrayList<>();
 
-        setContentView(R.layout.activity_home);
+        if(user == null) {
+            Intent login = new Intent(Home.this,LoginActivity.class);
+            Home.this.startActivity(login);
+        } else {
+            setContentView(R.layout.activity_home);
 
-        /**
-         *  PREPARE VARIABLES
-         */
-        linearLayout = findViewById(R.id.linearHomeLayout);
-        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+            // Read from the database
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    for (DataSnapshot d: dataSnapshot.getChildren()) {
+                        Game g = d.getValue(Game.class);
+                        g.setId(d.getKey());
+                        games.add(g);
+                    }
+
+                    buildUI(games);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    System.out.println("failed");
+                }
+            });
+
+            /**
+             *  PREPARE VARIABLES
+             */
+            linearLayout = findViewById(R.id.linearHomeLayout);
+
+            /**
+             * NAVIGATION BAR
+             */
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        }
     }
 
     /**
@@ -100,49 +138,7 @@ public class Home extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        linearLayout.removeAllViews();
-
-        /** GET ALL GAMES */
-        List<Game> games = gameViewModel.getAllGames();
-
-        /** BUILD UI */
-        buildUI(games);
-
-        /**
-         * NAVIGATION BAR
-         */
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    /**
-     * METHOD TO BUILD UI (1 IMAGE BY GAME)
-     * @param games
-     */
-    protected void buildUI(List<Game> games) {
-        for (final Game g : games) {
-            button = new ImageButton(this);
-            bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
-            drawable = new BitmapDrawable(getResources(), bitmap);
-            try {
-                stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            button.setImageDrawable(drawable);
-            button.setLayoutParams(params);
-            button.setAdjustViewBounds(true);
-            button.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    gamePage = new Intent (Home.this, GamePage.class);
-                    gamePage.putExtra("id", g.getId());
-                    System.out.println(g.getId());
-                    Home.this.startActivity(gamePage);
-                }
-            });
-            linearLayout.addView(button);
-            linearLayout.addView(new View(this));
-        }
-    }
+    
 }

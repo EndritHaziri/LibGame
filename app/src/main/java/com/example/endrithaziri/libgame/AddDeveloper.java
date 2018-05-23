@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import entity.Developer;
-import view_model.DeveloperViewModel;
 
 public class AddDeveloper extends AppCompatActivity {
 
@@ -20,7 +19,7 @@ public class AddDeveloper extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private String name;
-    private DeveloperViewModel devViewModel;
+    //private DeveloperViewModel devViewModel;
     private EditText etName;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,7 +48,7 @@ public class AddDeveloper extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        devViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        //devViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
         etName = findViewById(R.id.editTextDevelopper);
 
         /**
@@ -74,7 +73,7 @@ public class AddDeveloper extends AppCompatActivity {
         if(name.trim().equals(""))
             Toast.makeText(AddDeveloper.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            devViewModel.insert(new Developer(name));
+            //devViewModel.insert(new Developer(name));
 
             /**
              * SHOW INFORMATION AND CLOSE

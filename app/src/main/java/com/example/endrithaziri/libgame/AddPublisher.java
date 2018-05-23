@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import entity.Publisher;
-import view_model.PublisherViewModel;
 
 public class AddPublisher extends AppCompatActivity {
 
@@ -20,7 +19,7 @@ public class AddPublisher extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private String name;
-    private PublisherViewModel publisherViewModel;
+    //private PublisherViewModel publisherViewModel;
     private EditText etName;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -52,7 +51,7 @@ public class AddPublisher extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
+        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
         etName = findViewById(R.id.editTextPublisher);
 
         /**
@@ -77,7 +76,7 @@ public class AddPublisher extends AppCompatActivity {
         if(name.trim().equals(""))
             Toast.makeText(AddPublisher.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            publisherViewModel.insert(new Publisher(name));
+            //publisherViewModel.insert(new Publisher(name));
 
             /**
              * SHOW INFORMATION AND CLOSE

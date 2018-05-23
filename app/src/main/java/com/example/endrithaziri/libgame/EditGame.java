@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import entity.Game;
-import view_model.GameViewModel;
 
 public class EditGame extends AppCompatActivity {
 
@@ -20,7 +19,7 @@ public class EditGame extends AppCompatActivity {
     private Game g;
     private int id;
     private TextView description, title;
-    private GameViewModel gameViewModel;
+    //private GameViewModel gameViewModel;
     private String newTitle, newDescription;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -51,7 +50,7 @@ public class EditGame extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        //gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         title = findViewById(R.id.etEditTitle);
         description = findViewById(R.id.etEditDescription);
 
@@ -59,12 +58,12 @@ public class EditGame extends AppCompatActivity {
          * GET THE GAME
          */
         id = getIntent().getIntExtra("id", 0);
-        g = gameViewModel.getGameById(id);
+        //g = gameViewModel.getGameById(id);
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
-        title.setText(g.getName());
+        title.setText(g.getTitle());
         description.setText(g.getDescription());
 
         /**
@@ -90,7 +89,7 @@ public class EditGame extends AppCompatActivity {
         if(newTitle.trim().equals("") || newDescription.trim().equals(""))
             Toast.makeText(EditGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            gameViewModel.update(g.getId(), newTitle, newDescription);
+            //gameViewModel.update(g.getId(), newTitle, newDescription);
 
             /**
              * SHOW INFORMATIONS AND CLOSE

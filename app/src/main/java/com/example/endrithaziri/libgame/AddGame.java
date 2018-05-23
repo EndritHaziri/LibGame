@@ -42,9 +42,6 @@ import java.util.Map;
 import entity.Developer;
 import entity.Game;
 import entity.Publisher;
-import view_model.DeveloperViewModel;
-import view_model.GameViewModel;
-import view_model.PublisherViewModel;
 
 public class AddGame extends AppCompatActivity {
 
@@ -62,9 +59,9 @@ public class AddGame extends AppCompatActivity {
     private String name, description, id_publisher, id_developer;
     private List<Publisher> publishers;
     private List<Developer> developers;
-    private GameViewModel gameViewModel;
-    private DeveloperViewModel developerViewModel;
-    private PublisherViewModel publisherViewModel;
+    //private GameViewModel gameViewModel;
+    //private DeveloperViewModel developerViewModel;
+    //private PublisherViewModel publisherViewModel;
     private Spinner spinnerDev, spinnerPub;
     private List<String> publishersName = new ArrayList<>();
     private List<String> developersName = new ArrayList<>();
@@ -95,9 +92,9 @@ public class AddGame extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-        developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
-        publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
+        //gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        //developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
         spinnerDev = findViewById(R.id.spinnerDev);
         spinnerPub = findViewById(R.id.spinnerPub);
         buttonImg = findViewById(R.id.buttonAddImageGame);
@@ -164,8 +161,8 @@ public class AddGame extends AppCompatActivity {
         /**
          * GET ALL THE PUBLISHER AND DEVELOPER
          */
-        publishers = publisherViewModel.getAllPublisher();
-        developers = developerViewModel.getAllDeveloper();
+        //publishers = publisherViewModel.getAllPublisher();
+        //developers = developerViewModel.getAllDeveloper();
 
         for (Publisher p: publishers)
             publishersName.add(p.getName());
@@ -227,7 +224,7 @@ public class AddGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent editDev = new Intent (AddGame.this, EditDeveloper.class);
-                editDev.putExtra("id", developerViewModel.getIdDev(spinnerDev.getSelectedItem().toString()));
+                //editDev.putExtra("id", developerViewModel.getIdDev(spinnerDev.getSelectedItem().toString()));
                 AddGame.this.startActivity(editDev);
             }
         });
@@ -235,7 +232,7 @@ public class AddGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent editPub = new Intent(AddGame.this, EditPublisher.class);
-                editPub.putExtra("id", publisherViewModel.getPubId(spinnerPub.getSelectedItem().toString()));
+                //editPub.putExtra("id", publisherViewModel.getPubId(spinnerPub.getSelectedItem().toString()));
                 AddGame.this.startActivity(editPub);
             }
         });

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import entity.Publisher;
-import view_model.PublisherViewModel;
 
 public class EditPublisher extends AppCompatActivity {
 
@@ -22,7 +21,7 @@ public class EditPublisher extends AppCompatActivity {
     private int id;
     private String newName;
     private TextView name;
-    private PublisherViewModel publisherViewModel;
+    //private PublisherViewModel publisherViewModel;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -59,14 +58,14 @@ public class EditPublisher extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
+        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
         name = findViewById(R.id.editTextPub);
 
         /**
          * GET PUBLISHER
          */
         id = getIntent().getIntExtra("id", 0);
-        pub = publisherViewModel.getPubById(id);
+        //pub = publisherViewModel.getPubById(id);
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
@@ -95,7 +94,7 @@ public class EditPublisher extends AppCompatActivity {
         if(newName.trim().equals(""))
             Toast.makeText(EditPublisher.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            publisherViewModel.update(pub.getId(), newName);
+            //publisherViewModel.update(pub.getId(), newName);
 
             /**
              * SHOW INFORMATIONS AND CLOSE
@@ -113,7 +112,7 @@ public class EditPublisher extends AppCompatActivity {
         /**
          * REMOVE THE PUBLISHER
          */
-        publisherViewModel.deletePublisher(pub.getId());
+        //publisherViewModel.deletePublisher(pub.getId());
 
         /**
          * SHOW INFORMATIONS AND CLOSE

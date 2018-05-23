@@ -5,18 +5,18 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "dev_table")
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Developer {
 
     /* ==== DECLARATION ==== */
 
-    @PrimaryKey(autoGenerate = true)
     @NonNull
-    @ColumnInfo(name = "id")
     private int id;
 
-    @NonNull
-    @ColumnInfo(name = "name")
     private String name;
 
     /* ==== CONSTRUCTOR ==== */
@@ -40,8 +40,15 @@ public class Developer {
         return name;
     }
 
-    public void setName(@NonNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+
+        return result;
+    }
 }

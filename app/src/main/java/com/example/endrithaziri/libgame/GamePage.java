@@ -21,9 +21,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import entity.Game;
-import view_model.DeveloperViewModel;
-import view_model.GameViewModel;
-import view_model.PublisherViewModel;
 
 public class GamePage extends AppCompatActivity {
 
@@ -37,9 +34,9 @@ public class GamePage extends AppCompatActivity {
     private Bitmap bitmap;
     private Drawable drawable;
     private InputStream stream;
-    private GameViewModel gameViewModel;
-    private DeveloperViewModel developerViewModel;
-    private PublisherViewModel publisherViewModel;
+    //private GameViewModel gameViewModel;
+    //private DeveloperViewModel developerViewModel;
+    //private PublisherViewModel publisherViewModel;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -83,13 +80,13 @@ public class GamePage extends AppCompatActivity {
         description = findViewById(R.id.gameDescription);
         developer = findViewById(R.id.gamedevelopper);
         publisher = findViewById(R.id.gamePublisher);
-        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
-        developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
-        publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
+        //gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        //developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
+        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
 
         /** GET THE GAME BY ID */
         id = getIntent().getIntExtra("id", 0);
-        g = gameViewModel.getGameById(id);
+        //g = gameViewModel.getGameById(id);
 
         /**
          *  GET AND DECODE THE PICTURE OF THE GAME
@@ -106,18 +103,18 @@ public class GamePage extends AppCompatActivity {
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
-        title.setText(g.getName());
+        title.setText(g.getTitle());
         pic.setImageDrawable(drawable);
         description.setText(g.getDescription());
 
         try {
-            developer.setText(developerViewModel.getDevById(g.getDeveloper_id()).getName());
+            //developer.setText(developerViewModel.getDevById(g.getDeveloper_id()).getName());
         } catch (NullPointerException n) {
             developer.setText("UNKNOWN DEVELOPER");
         }
 
         try {
-            publisher.setText(publisherViewModel.getPubById(g.getPublisher_id()).getName());
+            //publisher.setText(publisherViewModel.getPubById(g.getPublisher_id()).getName());
         } catch (NullPointerException n) {
             publisher.setText("UNKNOWN PUBLISHER");
         }
@@ -136,7 +133,7 @@ public class GamePage extends AppCompatActivity {
         /**
          * DELETE THE GAME
          */
-        gameViewModel.deleteGame(g.getId());
+        //gameViewModel.deleteGame(g.getId());
 
         /**
          * SHOW INFORMATIONS AND CLOSE

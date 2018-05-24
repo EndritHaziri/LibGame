@@ -10,6 +10,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import entity.Developer;
 
 public class EditDeveloper extends AppCompatActivity {
@@ -18,10 +24,10 @@ public class EditDeveloper extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private Developer dev;
-    private int id;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private String newName;
     private TextView name;
-    //private DeveloperViewModel developerViewModel;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -58,14 +64,14 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        //developerViewModel = ViewModelProviders.of(this).get(DeveloperViewModel.class);
         name = findViewById(R.id.editTextDev);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("developers");
 
         /**
          * GET DEVELOPER
          */
-        id = getIntent().getIntExtra("id", 0);
-        //dev = developerViewModel.getDevById(id);
+        dev = (Developer)getIntent().getSerializableExtra("dev");
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
@@ -88,13 +94,17 @@ public class EditDeveloper extends AppCompatActivity {
          */
         newName = name.getText().toString();
 
+        Map<String,Object> newDev = new HashMap<>();
+        newDev.put("name", newName);
+
         /**
          * UPDATE THE DEVELOPER
          */
         if(newName.trim().equals(""))
             Toast.makeText(EditDeveloper.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            //developerViewModel.update(dev.getId(), newName);
+            myRef.child(dev.getId()).removeValue();
+            myRef.child(dev.getId()).updateChildren(newDev);
 
             /**
              * SHOW INFORMATIONS AND CLOSE
@@ -112,7 +122,7 @@ public class EditDeveloper extends AppCompatActivity {
         /**
          * REMOVE THE PUBLISHER
          */
-        //developerViewModel.deleteDeveloper(dev.getId());
+        myRef.child(dev.getId()).removeValue();
 
         /**
          * SHOW INFORMATION AND CLOSE

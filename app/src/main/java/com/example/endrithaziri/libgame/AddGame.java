@@ -120,12 +120,16 @@ public class AddGame extends AppCompatActivity {
                 for (DataSnapshot d: dataSnapshot.getChildren()) {
                     Publisher publisher = d.getValue(Publisher.class);
                     publisher.setId(d.getKey());
-                    System.out.println("===========pub===========" + publisher.getName());
                     publishers.add(publisher);
                 }
 
                 for (Publisher p: publishers)
                     publishersName.add(p.getName());
+
+                aaPub = new ArrayAdapter(AddGame.this, android.R.layout.simple_spinner_item, publishersName);
+                aaPub.setDropDownViewResource(
+                        android.R.layout.simple_spinner_dropdown_item);
+                spinnerPub.setAdapter(aaPub);
             }
 
             @Override
@@ -141,12 +145,16 @@ public class AddGame extends AppCompatActivity {
                 for (DataSnapshot d: dataSnapshot.getChildren()) {
                     Developer developer = d.getValue(Developer.class);
                     developer.setId(d.getKey());
-                    System.out.println("==========dev========" + developer.getName());
                     developers.add(developer);
                 }
 
                 for (Developer d: developers)
                     developersName.add(d.getName());
+
+                aaDev = new ArrayAdapter(AddGame.this, android.R.layout.simple_spinner_item, developersName);
+                aaDev.setDropDownViewResource(
+                        android.R.layout.simple_spinner_dropdown_item);
+                spinnerDev.setAdapter(aaDev);
             }
 
             @Override
@@ -158,16 +166,10 @@ public class AddGame extends AppCompatActivity {
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
-        aaDev = new ArrayAdapter(this, android.R.layout.simple_spinner_item, developersName);
-        aaDev.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        spinnerDev.setAdapter(aaDev);
 
 
-        aaPub = new ArrayAdapter(this, android.R.layout.simple_spinner_item, publishersName);
-        aaPub.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        spinnerPub.setAdapter(aaPub);
+
+
 
         /**
          * ADD BUTTON LISTENER
@@ -209,7 +211,7 @@ public class AddGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent editDev = new Intent (AddGame.this, EditDeveloper.class);
-                //editDev.putExtra("id", developerViewModel.getIdDev(spinnerDev.getSelectedItem().toString()));
+                editDev.putExtra("dev", developers.get(spinnerDev.getSelectedItemPosition()));
                 AddGame.this.startActivity(editDev);
             }
         });
@@ -217,7 +219,7 @@ public class AddGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent editPub = new Intent(AddGame.this, EditPublisher.class);
-                //editPub.putExtra("id", publisherViewModel.getPubId(spinnerPub.getSelectedItem().toString()));
+                editPub.putExtra("pub", publishers.get(spinnerPub.getSelectedItemPosition()));
                 AddGame.this.startActivity(editPub);
             }
         });

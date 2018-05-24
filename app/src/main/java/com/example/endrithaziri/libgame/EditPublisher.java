@@ -10,6 +10,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import entity.Publisher;
 
 public class EditPublisher extends AppCompatActivity {
@@ -18,10 +24,10 @@ public class EditPublisher extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private Publisher pub;
-    private int id;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private String newName;
     private TextView name;
-    //private PublisherViewModel publisherViewModel;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -58,14 +64,14 @@ public class EditPublisher extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        //publisherViewModel = ViewModelProviders.of(this).get(PublisherViewModel.class);
         name = findViewById(R.id.editTextPub);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("publishers");
 
         /**
          * GET PUBLISHER
          */
-        id = getIntent().getIntExtra("id", 0);
-        //pub = publisherViewModel.getPubById(id);
+        pub = (Publisher)getIntent().getSerializableExtra("pub");
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
@@ -87,6 +93,8 @@ public class EditPublisher extends AppCompatActivity {
          * GET THE NEW TEXT
          */
         newName = name.getText().toString();
+        Map<String,Object> newPub = new HashMap<>();
+        newPub.put("name", newName);
 
         /**
          * UPDATE THE PUBLISHER
@@ -94,7 +102,8 @@ public class EditPublisher extends AppCompatActivity {
         if(newName.trim().equals(""))
             Toast.makeText(EditPublisher.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            //publisherViewModel.update(pub.getId(), newName);
+            myRef.child(pub.getId()).removeValue();
+            myRef.child(pub.getId()).updateChildren(newPub);
 
             /**
              * SHOW INFORMATIONS AND CLOSE
@@ -112,7 +121,7 @@ public class EditPublisher extends AppCompatActivity {
         /**
          * REMOVE THE PUBLISHER
          */
-        //publisherViewModel.deletePublisher(pub.getId());
+        myRef.child(pub.getId()).removeValue();
 
         /**
          * SHOW INFORMATIONS AND CLOSE

@@ -9,6 +9,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import entity.Game;
 
 public class EditGame extends AppCompatActivity {
@@ -17,9 +23,9 @@ public class EditGame extends AppCompatActivity {
      * VARIABLE DECLARATION
      */
     private Game g;
-    private int id;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private TextView description, title;
-    //private GameViewModel gameViewModel;
     private String newTitle, newDescription;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,15 +56,15 @@ public class EditGame extends AppCompatActivity {
         /**
          *  PREPARE VARIABLES
          */
-        //gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         title = findViewById(R.id.etEditTitle);
         description = findViewById(R.id.etEditDescription);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("games");
 
         /**
          * GET THE GAME
          */
-        id = getIntent().getIntExtra("id", 0);
-        //g = gameViewModel.getGameById(id);
+        g = (Game)getIntent().getSerializableExtra("game");
 
         /**
          * SET DATA IN CORRESPONDING FIELDS
@@ -83,13 +89,20 @@ public class EditGame extends AppCompatActivity {
         newTitle = title.getText().toString();
         newDescription = description.getText().toString();
 
+        Map<String,Object> newGame = new HashMap<>();
+        newGame.put("title", newTitle);
+        newGame.put("description", newDescription);
+        newGame.put("developer_id", g.getDeveloper_id());
+        newGame.put("publisher_id", g.getPublisher_id());
+
         /**
          * UPDATE THE GAME
          */
         if(newTitle.trim().equals("") || newDescription.trim().equals(""))
             Toast.makeText(EditGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
         else {
-            //gameViewModel.update(g.getId(), newTitle, newDescription);
+            myRef.child(g.getId()).removeValue();
+            myRef.child(g.getId()).updateChildren(newGame);
 
             /**
              * SHOW INFORMATIONS AND CLOSE

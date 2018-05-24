@@ -50,7 +50,7 @@ public class GamePage extends AppCompatActivity {
 
                 case R.id.navigation_edit:
                     Intent editGame = new Intent (GamePage.this, EditGame.class);
-                    editGame.putExtra("id", game.getId());
+                    editGame.putExtra("game", game);
                     GamePage.this.startActivity(editGame);
                     return true;
 

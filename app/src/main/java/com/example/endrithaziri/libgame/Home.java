@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ public class Home extends AppCompatActivity {
     /**
      * VARIABLE DECLARATION
      */
+    private static final String TAG = "Home";
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -88,6 +91,7 @@ public class Home extends AppCompatActivity {
         if(user == null) {
             Intent login = new Intent(Home.this,LoginActivity.class);
             Home.this.startActivity(login);
+            Log.d(TAG, "Starting login activity");
         } else {
             setContentView(R.layout.activity_home);
 
@@ -101,15 +105,17 @@ public class Home extends AppCompatActivity {
                         Game g = d.getValue(Game.class);
                         g.setId(d.getKey());
                         games.add(g);
+                        Log.d(TAG, "Game" + g.getTitle() + " successfully added");
                     }
-
+                    Log.d(TAG, "Building UI...");
                     buildUI(games);
+                    Log.d(TAG, "UI ok");
                 }
 
                 @Override
                 public void onCancelled(DatabaseError error) {
                     // Failed to read value
-                    System.out.println("failed");
+                    Log.d(TAG, "Failed to load games");
                 }
             });
 

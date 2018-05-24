@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ public class AddDeveloper extends AppCompatActivity {
     /**
      * VARIABLE DECLARATION
      */
+    private static final String TAG = "AddDeveloper";
+
     private String name;
     private EditText etName;
     private FirebaseDatabase mFirebaseDatabase;
@@ -86,6 +89,7 @@ public class AddDeveloper extends AppCompatActivity {
                 Toast.makeText(this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
             } else {
                 myRef.child(name).updateChildren(dev);
+                Log.d(TAG, "Developer successfully added");
             }
 
             /**

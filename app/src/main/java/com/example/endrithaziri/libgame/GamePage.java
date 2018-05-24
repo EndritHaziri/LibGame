@@ -108,7 +108,7 @@ public class GamePage extends AppCompatActivity {
         description.setText(game.getDescription());
 
         try {
-            developer.setText(game.getPublisher_id());
+            developer.setText(game.getDeveloper_id());
         } catch (NullPointerException n) {
             developer.setText("UNKNOWN DEVELOPER");
         }

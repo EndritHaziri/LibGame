@@ -114,15 +114,47 @@ public class AddGame extends AppCompatActivity {
         /**
          * GET ALL THE PUBLISHER AND DEVELOPER
          */
-        publishers = getAllPublishers();
-        developers = getAllDevelopers();
+        myRefPub.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d: dataSnapshot.getChildren()) {
+                    Publisher publisher = d.getValue(Publisher.class);
+                    publisher.setId(d.getKey());
+                    System.out.println("===========pub===========" + publisher.getName());
+                    publishers.add(publisher);
+                }
 
-        for (Publisher p: publishers)
-            publishersName.add(p.getName());
+                for (Publisher p: publishers)
+                    publishersName.add(p.getName());
+            }
 
-        for (Developer d: developers)
-            developersName.add(d.getName());
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                System.out.println("failed");
+            }
+        });
 
+        myRefDev.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d: dataSnapshot.getChildren()) {
+                    Developer developer = d.getValue(Developer.class);
+                    developer.setId(d.getKey());
+                    System.out.println("==========dev========" + developer.getName());
+                    developers.add(developer);
+                }
+
+                for (Developer d: developers)
+                    developersName.add(d.getName());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                System.out.println("failed");
+            }
+        });
         /**
          * SET DATA IN CORRESPONDING FIELDS
          */
@@ -191,53 +223,6 @@ public class AddGame extends AppCompatActivity {
         });
     }
 
-    private List<Publisher> getAllPublishers() {
-        final List<Publisher> p = new ArrayList<>();
-
-        myRefPub.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot d: dataSnapshot.getChildren()) {
-                    Publisher publisher = d.getValue(Publisher.class);
-                    publisher.setId(d.getKey());
-                    System.out.println("===========pub===========" + publisher.getName());
-                    p.add(publisher);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                System.out.println("failed");
-            }
-        });
-
-        return publishers;
-    }
-
-    private List<Developer> getAllDevelopers() {
-        final List<Developer> dev = new ArrayList<>();
-
-        myRefDev.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot d: dataSnapshot.getChildren()) {
-                    Developer developer = d.getValue(Developer.class);
-                    developer.setId(d.getKey());
-                    System.out.println("==========dev========" + developer.getName());
-                    dev.add(developer);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                System.out.println("failed");
-            }
-        });
-
-        return dev;
-    }
 
     /**
      * METHOD TO SAVE A NEW GAME

@@ -1,6 +1,5 @@
 package com.example.endrithaziri.libgame;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;

@@ -1,6 +1,5 @@
 package com.example.endrithaziri.libgame;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,10 +11,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import javax.security.auth.login.LoginException;
-
-import static android.R.id.message;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -81,8 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                 toastMessage("Successfully signed out.");
             }
         });
-
-
     }
 
     @Override

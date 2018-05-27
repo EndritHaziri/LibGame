@@ -1,18 +1,13 @@
 package com.example.endrithaziri.libgame;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,8 +17,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,9 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import entity.Developer;
-import entity.Game;
 import entity.Publisher;
 
 public class AddGame extends AppCompatActivity {
@@ -298,7 +288,6 @@ public class AddGame extends AppCompatActivity {
                 stream = getContentResolver().openInputStream(data.getData());
                 realImage = BitmapFactory.decodeStream(stream);
                 image.setImageBitmap(realImage);
-                imgData = encodeToBase64(realImage);
                 Uri uri = data.getData();
 
                 StorageReference filepath = mStorageRef.child("GameImage").child(uri.getLastPathSegment());
@@ -308,52 +297,13 @@ public class AddGame extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Toast.makeText(AddGame.this, "Upload done", Toast.LENGTH_LONG).show();
                     }
-                })/*
-                        .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                })*/
-                ;
+                });
 
             }
             catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * METHOD TO ENCODE THE SELECTED IMAGE
-     * @param image
-     * @return
-     */
-    public static String encodeToBase64(Bitmap image) {
-        Bitmap immage = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immage.compress(Bitmap.CompressFormat.PNG, 10, baos);
-        immage.compress(Bitmap.CompressFormat.JPEG, 10, baos);
-        byte[] b = baos.toByteArray();
-        if(b.length / 1024 >= 1024) {
-            System.out.println(b.length/1024 + " Image too big");
-            return "";
-        } else {
-            String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-            System.out.println(b.length/1024 + " ok");
-            return imageEncoded;
-        }
-
-    }
-
-    /**
-     * METHOD TO DECODE THE INPUT STRING TO AN IMAGE
-     * @param input
-     * @return
-     */
-    public static Bitmap decodeToBase64(String input) {
-       byte[] decodedByte = Base64.decode(input, 0);
-       return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     @Override

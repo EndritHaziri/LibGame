@@ -101,6 +101,7 @@ public class Home extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
+                    games.clear();
                     for (DataSnapshot d: dataSnapshot.getChildren()) {
                         Game g = d.getValue(Game.class);
                         g.setId(d.getKey());

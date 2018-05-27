@@ -115,8 +115,13 @@ public class AddGame extends AppCompatActivity {
          * GET ALL THE PUBLISHER AND DEVELOPER
          */
         myRefPub.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                publishers.clear();
+                publishersName.clear();
+
                 for (DataSnapshot d: dataSnapshot.getChildren()) {
                     Publisher publisher = d.getValue(Publisher.class);
                     publisher.setId(d.getKey());
@@ -142,6 +147,10 @@ public class AddGame extends AppCompatActivity {
         myRefDev.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                developers.clear();
+                developersName.clear();
+
                 for (DataSnapshot d: dataSnapshot.getChildren()) {
                     Developer developer = d.getValue(Developer.class);
                     developer.setId(d.getKey());

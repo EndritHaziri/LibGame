@@ -57,5 +57,5 @@
     <string name="error_incorrect_password">Mot de passe incorrect</string>
     <string name="error_field_required">Ce champ est obligatoire</string>
     <string name="permission_rationale">Permission demandée pour les contacts</string>
-    <string name="connected_as">Connected as:</string>
+    <string name="connected_as">Connecté en tant que:</string>
 </resources>

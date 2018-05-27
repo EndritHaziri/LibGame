@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +49,6 @@ public class AddGame extends AppCompatActivity {
     private Button buttonEditDev, buttonEditPub;
     private BottomNavigationItemView buttonAddGame, buttonCancel;
     private ImageView image;
-    private String imgData = "";
     private String name, description, id_publisher, id_developer;
     private List<Publisher> publishers = new ArrayList<>();
     private List<Developer> developers = new ArrayList<>();
@@ -59,6 +59,9 @@ public class AddGame extends AppCompatActivity {
     private EditText etName, etDescription;
     private InputStream stream;
     private Bitmap realImage;
+    private String pathImage;
+    private StorageReference filepath;
+    private Uri uri;
 
     /**
      *  FIREBASE VARIABLES
@@ -165,13 +168,6 @@ public class AddGame extends AppCompatActivity {
                 System.out.println("failed");
             }
         });
-        /**
-         * SET DATA IN CORRESPONDING FIELDS
-         */
-
-
-
-
 
         /**
          * ADD BUTTON LISTENER
@@ -249,15 +245,20 @@ public class AddGame extends AppCompatActivity {
         game.put("description", description);
         game.put("developer_id", id_developer.toLowerCase().trim());
         game.put("publisher_id", id_publisher.toLowerCase().trim());
+        game.put("url_image", pathImage);
 
         Log.d(TAG, "onClick: Attempting to add object to database.");
         if(name.trim().equals("") || description.trim().equals("")) {
             Toast.makeText(AddGame.this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
-        } else if(imgData.equals(""))
-            Toast.makeText(AddGame.this, R.string.error_img_too_big, Toast.LENGTH_SHORT).show();
-        else {
+        } else {
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(AddGame.this, "Upload done", Toast.LENGTH_LONG).show();
+                }
+            });
             myRef.child(name).updateChildren(game);
-            toastMessage("ok");
+            toastMessage("Game saved");
         }
     }
 
@@ -288,17 +289,11 @@ public class AddGame extends AppCompatActivity {
                 stream = getContentResolver().openInputStream(data.getData());
                 realImage = BitmapFactory.decodeStream(stream);
                 image.setImageBitmap(realImage);
-                Uri uri = data.getData();
+                uri = data.getData();
 
-                StorageReference filepath = mStorageRef.child("GameImage").child(uri.getLastPathSegment());
-
-                filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(AddGame.this, "Upload done", Toast.LENGTH_LONG).show();
-                    }
-                });
-
+                filepath = mStorageRef.child("GameImage").child(uri.getLastPathSegment());
+                Task<Uri> downloadUrl = filepath.getDownloadUrl();
+                pathImage = downloadUrl.toString();
             }
             catch (FileNotFoundException e) {
                 e.printStackTrace();

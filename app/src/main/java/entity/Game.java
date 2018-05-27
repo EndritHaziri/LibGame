@@ -23,21 +23,11 @@ public class Game implements Serializable {
 
     private String publisher_id;
 
-    private int evaluation_id;
-
     /* ==== CONSTRUCTOR ==== */
 
     public Game() {
 
     }
-
-    /*public Game(String name, String description, String url_image, String developer_id, String publisher_id) {
-        this.name = name;
-        this.description = description;
-        this.url_image = url_image;
-        this.developer_id = developer_id;
-        this.publisher_id = publisher_id;
-    }*/
 
     /* ==== GETTER AND SETTER ==== */
 
@@ -80,14 +70,6 @@ public class Game implements Serializable {
 
     public void setPublisher_id(String publisher_id) {
         this.publisher_id = publisher_id;
-    }
-
-    public int getEvaluation_id() {
-        return evaluation_id;
-    }
-
-    public void setEvaluation_id(int evaluation_id) {
-        this.evaluation_id = evaluation_id;
     }
 
     public String getUrl_image() {

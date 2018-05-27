@@ -292,8 +292,7 @@ public class AddGame extends AppCompatActivity {
                 uri = data.getData();
 
                 filepath = mStorageRef.child("GameImage").child(uri.getLastPathSegment());
-                Task<Uri> downloadUrl = filepath.getDownloadUrl();
-                pathImage = downloadUrl.toString();
+                pathImage = "gs://libgame-20422.appspot.com" + filepath.getPath();
             }
             catch (FileNotFoundException e) {
                 e.printStackTrace();

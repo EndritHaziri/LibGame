@@ -14,8 +14,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -31,13 +35,10 @@ public class GamePage extends AppCompatActivity {
      */
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private StorageReference gsReference;
     private Game game;
     private TextView description, title, publisher, developer;
     private ImageButton pic;
-    private Bitmap bitmap;
-    private Drawable drawable;
-    private InputStream stream;
-    private List<Game> games;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -88,22 +89,14 @@ public class GamePage extends AppCompatActivity {
         game = (Game)getIntent().getSerializableExtra("game");
 
         /**
-         *  GET AND DECODE THE PICTURE OF THE GAME
-         */
-        //bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
-        //drawable = new BitmapDrawable(getResources(), bitmap);
-
-        /*try {
-            stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
-
-        /**
          * SET DATA IN CORRESPONDING FIELDS
          */
         title.setText(game.getTitle());
-        //pic.setImageDrawable(drawable);
+        gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(game.getUrl_image());
+        Glide.with(this /* context */)
+                .using(new FirebaseImageLoader())
+                .load(gsReference)
+                .into(pic);
         pic.setImageDrawable(getResources().getDrawable(R.drawable.hearthstone_legende));
         description.setText(game.getDescription());
 

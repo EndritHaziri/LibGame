@@ -3,6 +3,7 @@ package com.example.endrithaziri.libgame;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -45,10 +51,7 @@ public class Home extends AppCompatActivity {
     private FirebaseUser user;
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    private InputStream stream;
     private ImageButton button;
-    private Bitmap bitmap;
-    private Drawable drawable;
     private Intent gamePage;
     private List<Game> games;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -105,7 +108,7 @@ public class Home extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
-                    games.clear();
+                    games = new ArrayList<>();
                     for (DataSnapshot d: dataSnapshot.getChildren()) {
                         Game g = d.getValue(Game.class);
                         g.setId(d.getKey());
@@ -143,7 +146,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        games.clear();
     }
 
     /**
@@ -152,15 +155,12 @@ public class Home extends AppCompatActivity {
      */
     protected void buildUI(List<Game> games) {
         for (final Game g : games) {
+            StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(g.getUrl_image());
             button = new ImageButton(this);
-            //bitmap = AddGame.decodeToBase64(g.getUrl_image().trim());
-            /*try {
-                stream = getContentResolver().openInputStream(Uri.parse(g.getUrl_image()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
-
-            button.setImageDrawable(getResources().getDrawable(R.drawable.hearthstone_legende));
+            Glide.with(this /* context */)
+                    .using(new FirebaseImageLoader())
+                    .load(gsReference)
+                    .into(button);
             button.setLayoutParams(params);
             button.setAdjustViewBounds(true);
             button.setOnClickListener(new View.OnClickListener(){
